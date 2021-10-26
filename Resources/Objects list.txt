@@ -1,5 +1,0 @@
-Player
-Ennemy
-Boss
-NPC
-
