@@ -1,6 +1,0 @@
-• Partie du diagramme sur la gestion des scènes
-• Partie du diagramme sur les items
-• Faire tests menus contextuels avec touches directionnelles
-• Mettre à jour les classes
-
-• Mode histoire + mode arcade ?
