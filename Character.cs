@@ -8,7 +8,7 @@ namespace RPG
     {
         public string Name { get; private set; }
 
-        public Character(string name)
+        protected Character(string name)
         {
             Name = name;
         }

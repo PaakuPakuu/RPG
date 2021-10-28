@@ -6,5 +6,9 @@ namespace RPG
 {
     public abstract class Scene
     {
+        protected Scene()
+        {
+
+        }
     }
 }

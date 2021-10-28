@@ -6,7 +6,7 @@ namespace RPG
     {
         public CombatantStats Stats { get; private set; }
 
-        public Combatant(string name) : base(name)
+        protected Combatant(string name) : base(name)
         {
             Stats = new CombatantStats();
         }
