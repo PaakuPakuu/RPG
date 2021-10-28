@@ -4,11 +4,12 @@ using System.Text;
 
 namespace RPG
 {
-    public class Ennemy : Combatant
+    public class CombatScene : Scene
     {
-        public Ennemy(string name) : base(name)
-        {
+        private Fight _fight;
 
+        public CombatScene()
+        {
         }
     }
 }

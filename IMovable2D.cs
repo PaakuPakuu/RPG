@@ -12,7 +12,7 @@ namespace RPG
         Left
     }
 
-    public interface IMovable : ILocatable
+    public interface IMovable2D : ILocatable2D
     {
         Direction LooksAt { get; }
 

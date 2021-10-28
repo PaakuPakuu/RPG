@@ -4,8 +4,7 @@ using System.Text;
 
 namespace RPG
 {
-    public interface ILocatable
+    public class CreditsScene : Scene
     {
-        Point Position { get; }
     }
 }

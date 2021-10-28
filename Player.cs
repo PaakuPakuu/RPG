@@ -4,11 +4,9 @@ using System.Text;
 
 namespace RPG
 {
-    public class Player : Character, IMortal
+    public class Player : Combatant
 
     {
-        public int Health { get; set; }
-
         public Player(string name) : base(name)
         {
 
