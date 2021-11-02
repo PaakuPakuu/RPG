@@ -8,19 +8,38 @@ namespace RPG
     {
         static void Main(string[] args)
         {
+            int windowSizeX = 70;
+            int windowSizeY = 30;
+
             Console.Title = "RPG";
-            Console.WriteLine("Hello World!\n");
-
-            MenuItem opt1 = new MenuItem("option 1", () => { Console.WriteLine("Option 1 sélectionnée"); });
-            MenuItem opt2 = new MenuItem("option 2", () => { Console.WriteLine("Option 2 sélectionnée"); });
-            MenuItem opt3 = new MenuItem("option 3", () => { Console.WriteLine("Option 3 sélectionnée"); });
-
-            ContextualMenu cm = new ContextualMenu(false, opt1, opt2, opt3);
-
             Console.CursorVisible = false;
-            cm.Perform();
+            Console.SetWindowSize(windowSizeX, windowSizeY);
 
-            Console.MoveBufferArea(0, 0, 20, 10, 15, 15);
+            // Buffer tests
+
+            int mapSizeX = 140;
+            int mapSizeY = 60;
+            int windowPositionX = (mapSizeX - windowSizeX) / 2;
+            int windowPositionY = (mapSizeY - windowSizeY) / 2;
+
+            Console.SetBufferSize(mapSizeX, mapSizeY);
+            for (int i = 0; i < mapSizeY; i++)
+            {
+                for (int j = 0; j < mapSizeX / 2; j++)
+                {
+                    if (i % 2 == 0)
+                    {
+                        Console.Write(((i + j) % 2 == 0 ? "# " : "@ "));
+                    }
+                    else
+                    {
+                        Console.Write(' ');
+                    }
+                }
+                Console.WriteLine();
+            }
+
+            Console.SetWindowPosition(windowPositionX, windowPositionY);
             Console.ReadKey();
         }
     }
