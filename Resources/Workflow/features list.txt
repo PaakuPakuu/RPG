@@ -1,0 +1,5 @@
+• Le joueur se balade sur une map 2d
+• Le joueur peut ramasser des items
+• Le joueur peut rencontrer des monstres sur la map
+• Un item ramassable est toujours affiché par le même caractère. Le joueur se positionne dessus pour voir la description de l'item et pouvoir appuyer sur la touche de ramassage.
+• Les dimensions de l'écran sont 
