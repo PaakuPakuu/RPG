@@ -8,41 +8,42 @@ namespace RPG
     {
         private readonly bool _horizontalDisplay;
 
-        public List<MenuItem> OptionList;
-        public int OptionsCount { get => OptionList.Count; }
+        private List<MenuItem> _optionList;
+        private Point _position;
+        private bool _centeredOnWindow;
 
-        public ContextualMenu(bool horizontal = false, params MenuItem[] options)
+        public ContextualMenu(int x, int y, bool horizontal = false)
         {
-            if (options.Length == 0)
-            {
-                throw new ArgumentException($"At least one {options} parameter is needed");
-            }
-
-            OptionList = new List<MenuItem>(options);
-
-            for (int i = 0; i < OptionsCount; i++)
-            {
-                OptionList[i].Id = i + 1;
-            }
-
+            _optionList = new List<MenuItem>();
             _horizontalDisplay = horizontal;
+            _position = new Point(x, y);
+            _centeredOnWindow = false;
         }
+
+        public ContextualMenu(bool horizontal = false) : this(0, 0, horizontal)
+        {
+            _centeredOnWindow = true;
+        }
+
+        public void AddMenuItem(MenuItem menuItem) => _optionList.Add(menuItem);
+
+        public void AddMenuItem(string description, Action action) => AddMenuItem(new MenuItem(description, action));
 
         public void Perform()
         {
             Console.WriteLine(ToString() + '\n');
-            GetOptionFromNumber().OptionAction();
+            AskUserOption().MenuItemAction();
         }
 
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
 
-            foreach (MenuItem option in OptionList)
+            foreach (MenuItem option in _optionList)
             {
                 if (_horizontalDisplay)
                 {
-                    sb.Append(option.ToString() + (option == OptionList[OptionsCount - 1] ? '\n' : '\t'));
+                    sb.Append(option.ToString()).Append(option == _optionList[^1] ? '\n' : '\t');
                 }
                 else
                 {
@@ -53,18 +54,18 @@ namespace RPG
             return sb.ToString();
         }
 
-        private MenuItem GetOptionFromNumber()
+        private MenuItem AskUserOption()
         {
             bool stopMenu = false;
             bool validKey = false;
-            List<ConsoleKey> validKeys = new List<ConsoleKey>() { ConsoleKey.UpArrow, ConsoleKey.DownArrow, ConsoleKey.Enter };
-            ConsoleKey keyPressed = ConsoleKey.NoName;
             int index = 0;
 
-            Console.SetCursorPosition(8, 2 + index);
-            Console.Write("> ");
-            Console.SetCursorPosition(18, 2 + index);
-            Console.Write(" <");
+            List<ConsoleKey> validKeys = (!_horizontalDisplay ? DisplayTools.VerticalMenuKeys : DisplayTools.HorizontalMenuKeys);
+            validKeys.AddRange(DisplayTools.UniversalKeys);
+            ConsoleKey keyPressed = ConsoleKey.NoName;
+
+            DisplayTools.WriteInWindowAt("> ", 8, 2);
+            DisplayTools.WriteInWindowAt(" <", 18, 2);
 
             while (!stopMenu)
             {
@@ -79,11 +80,11 @@ namespace RPG
                 Console.SetCursorPosition(18, 2 + index);
                 Console.Write("  ");
 
-                if (keyPressed == ConsoleKey.UpArrow)
+                if (keyPressed == ConsoleKey.LeftArrow && _horizontalDisplay || keyPressed == ConsoleKey.UpArrow)
                 {
                     index--;
                 }
-                else if (keyPressed == ConsoleKey.DownArrow)
+                else if (keyPressed == ConsoleKey.RightArrow && !_horizontalDisplay || keyPressed == ConsoleKey.DownArrow)
                 {
                     index++;
                 }
@@ -97,8 +98,7 @@ namespace RPG
                 validKey = false;
             }
 
-            Console.SetCursorPosition(0, 7);
-            return OptionList[index];
+            return _optionList[index];
         }
     }
 }

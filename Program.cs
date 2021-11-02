@@ -8,7 +8,7 @@ namespace RPG
     {
         static void Main(string[] args)
         {
-            int windowSizeX = 70;
+            /*int windowSizeX = 70;
             int windowSizeY = 30;
 
             Console.Title = "RPG";
@@ -40,7 +40,9 @@ namespace RPG
             }
 
             Console.SetWindowPosition(windowPositionX, windowPositionY);
-            Console.ReadKey();
+            Console.ReadKey();*/
+
+            Game.GameInstance.LaunchGame();
         }
     }
 }

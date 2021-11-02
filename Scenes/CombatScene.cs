@@ -11,5 +11,10 @@ namespace RPG
         public CombatScene()
         {
         }
+
+        public override void ExecuteScene()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
