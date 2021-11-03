@@ -1,7 +1,7 @@
 ﻿namespace RPG
 {
-    public interface ITriggerable
+    public interface ITriggerable : ILocatable2D
     {
-
+        void OnTrigger();
     }
 }

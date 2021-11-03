@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace RPG
+﻿namespace RPG
 {
     public enum Direction
     {
@@ -14,11 +10,9 @@ namespace RPG
 
     public interface IMovable2D : ILocatable2D
     {
-        Direction LooksAt { get; }
+        Direction LookingAt { get; }
+        Point PreviousPosition { get; }
 
-        bool Move(Direction direction)
-        {
-            throw new NotImplementedException();
-        }
+        bool Move(Direction direction);
     }
 }
