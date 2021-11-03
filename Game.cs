@@ -49,6 +49,7 @@ namespace RPG
             while (_isRunning)
             {
                 ActiveScene.ExecuteScene();
+                _isRunning = false;
             }
         }
     }

@@ -10,7 +10,7 @@ namespace RPG
 
         public TitleMenuScene()
         {
-            _titleMenu = new ContextualMenu();
+            _titleMenu = new ContextualMenu(padding: 1);
             _titleMenu.AddMenuItem("Jouer", LaunchGameScene);
             _titleMenu.AddMenuItem("Options", LaunchSettingsScene);
             _titleMenu.AddMenuItem("Crédits", LaunchCreditsScene);
@@ -19,7 +19,9 @@ namespace RPG
 
         public override void ExecuteScene()
         {
-            _titleMenu.Perform();
+            DisplayTools.WriteInWindowAt("RGP NAHEULBEUQUE", 10, 2);
+            _titleMenu.Execute();
+            Console.ReadKey();
         }
 
         #region MenuItem actions
