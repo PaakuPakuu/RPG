@@ -17,7 +17,7 @@ namespace RPG
 
         public override void ExecuteScene()
         {
-            DisplayTools.WriteInWindowAt("RGP NAHEULBEUQUE", 10, 2);
+            //DisplayTools.WriteInWindowAt("▁▂▃▄▅▆▇█▉", 10, 2);
             _titleMenu.Execute();
             Console.ReadKey();
         }
