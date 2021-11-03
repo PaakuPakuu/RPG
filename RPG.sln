@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31624.102
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RPG", "RPG.csproj", "{9FBC89EE-507A-4E5E-92A8-973D250A0420}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RPG", "RPG.csproj", "{9FBC89EE-507A-4E5E-92A8-973D250A0420}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RPGEditor", "..\RPGEditor\RPGEditor.csproj", "{59AF3D03-0C61-4B3F-B63B-237FAE2EBEAC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RPGDatas", "..\RPGDatas\RPGDatas.csproj", "{1A2DEC43-159D-4571-892A-30B25668ACAF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{9FBC89EE-507A-4E5E-92A8-973D250A0420}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9FBC89EE-507A-4E5E-92A8-973D250A0420}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9FBC89EE-507A-4E5E-92A8-973D250A0420}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59AF3D03-0C61-4B3F-B63B-237FAE2EBEAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59AF3D03-0C61-4B3F-B63B-237FAE2EBEAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59AF3D03-0C61-4B3F-B63B-237FAE2EBEAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59AF3D03-0C61-4B3F-B63B-237FAE2EBEAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A2DEC43-159D-4571-892A-30B25668ACAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A2DEC43-159D-4571-892A-30B25668ACAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A2DEC43-159D-4571-892A-30B25668ACAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A2DEC43-159D-4571-892A-30B25668ACAF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
