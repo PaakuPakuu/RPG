@@ -1,0 +1,12 @@
+SPRITE DESCRIPTION
+
+Murs:
+
+█ Bordures de map
+
+Traversable :
+
+⍈⍇⍐⍗ Map connectors
+░ Chemins pavés
+▲ Fiole pleine
+△ Fiole vide

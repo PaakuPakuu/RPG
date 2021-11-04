@@ -2,4 +2,7 @@
 • Le joueur peut ramasser des items
 • Le joueur peut rencontrer des monstres sur la map
 • Un item ramassable est toujours affiché par le même caractère. Le joueur se positionne dessus pour voir la description de l'item et pouvoir appuyer sur la touche de ramassage.
-• Les dimensions de l'écran sont 
+• Les dimensions de l'écran sont 70 x 30
+• Le joueur peut vendre les potions vidées (▲ et △)
+
+• Gravure Glalolitic ?
