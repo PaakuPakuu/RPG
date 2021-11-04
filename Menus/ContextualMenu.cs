@@ -17,13 +17,13 @@ namespace RPG
     public class ContextualMenu
     {
         private readonly bool _horizontalDisplay;
-        private Point _position;
-        private bool _centeredText;
-        private bool _centeredOnWindow;
-        private BorderStyle _borderStyle;
-        private int _padding;
+        private readonly Point _position;
+        private readonly bool _centeredText;
+        private readonly bool _centeredOnWindow;
+        private readonly BorderStyle _borderStyle;
+        private readonly int _padding;
         private int _maxMenuItemLength;
-        private List<MenuItem> _optionList;
+        private readonly List<MenuItem> _optionList;
 
         public ContextualMenu(int x, int y, bool horizontal = false, bool centered = true, BorderStyle borderStyle = BorderStyle.None, int padding = 0)
         {

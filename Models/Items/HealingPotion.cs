@@ -4,10 +4,11 @@ namespace RPG
 {
     public class HealingPotion : Item, IConsumable
     {
+        
         public int Count { get; set; }
         public int HealingPoints { get; }
 
-        public HealingPotion(string name, int healingPoints) : base(name)
+        public HealingPotion(string name, int healingPoints) : base(name, "▲")
         {
             HealingPoints = Math.Max(healingPoints, 0);
         }

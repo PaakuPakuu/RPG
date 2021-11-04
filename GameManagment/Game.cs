@@ -1,31 +1,25 @@
-﻿namespace RPG
+﻿using System;
+
+namespace RPG
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <remarks>
+    /// Singleton implementation source : https://fr.wikipedia.org/wiki/Singleton_(patron_de_conception)#C#
+    /// </remarks>
     public sealed class Game
     {
-        private static Game _instance = null;
-        private static readonly object padlock = new object();
+        private static readonly Lazy<Game> _lazy = new Lazy<Game>(() => new Game());
 
         private bool _isRunning;
 
         public static Scene ActiveScene { private get; set; }
+        public static Adventure Adventure { get; }
 
         public static Game GameInstance
         {
-            get
-            {
-                lock (padlock)
-                {
-                    if (_instance == null)
-                    {
-                        _instance = new Game();
-                    }
-
-                    return _instance;
-                }
-            }
-
-            // SOURCE : https://jlambert.developpez.com/tutoriels/dotnet/implementation-pattern-singleton-csharp
-            // singeton thread-friendly
+            get { return _lazy.Value; }
         }
 
         private Game()
@@ -34,9 +28,6 @@
             _isRunning = false;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void LaunchGame()
         {
             DisplayTools.InitializeWindow();
@@ -47,6 +38,11 @@
                 ActiveScene.ExecuteScene();
                 _isRunning = false;
             }
+        }
+
+        public void EndGame()
+        {
+            _isRunning = false;
         }
     }
 }

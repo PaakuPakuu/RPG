@@ -4,7 +4,7 @@ namespace RPG
 {
     public class Inventory
     {
-        private List<Item> _items;
+        private readonly List<Item> _items;
 
         public Inventory(int columns, int rows)
         {

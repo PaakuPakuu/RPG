@@ -38,6 +38,7 @@
             Console.SetWindowPosition(windowPositionX, windowPositionY);
             Console.ReadKey();*/
 
+            //Game.GameInstance.LaunchGame();
             Game.GameInstance.LaunchGame();
         }
     }

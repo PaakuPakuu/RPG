@@ -2,11 +2,11 @@
 
 namespace RPG
 {
-    public class GameWorld
+    public class Adventure
     {
-        private List<Map> _mapList;
+        private readonly List<Map> _mapList;
 
-        public GameWorld()
+        public Adventure()
         {
             _mapList = new List<Map>();
         }

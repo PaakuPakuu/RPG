@@ -27,10 +27,13 @@ namespace RPG
 
         #region Console encoding
 
+        private const string FONT_NAME = "DejaVu Sans Mono";
+        private const int FONT_SIZE = 14;
+
         private const int LF_FACESIZE = 32;
         private const int STD_OUTPUT_HANDLE = -11;
         private const int TMPF_TRUETYPE = 4;
-        private static IntPtr INVALID_HANDLE_VALUE = new IntPtr(-1);
+        private static readonly IntPtr INVALID_HANDLE_VALUE = new IntPtr(-1);
 
         [StructLayout(LayoutKind.Sequential)]
         internal struct COORD
@@ -66,7 +69,7 @@ namespace RPG
 
         #endregion
 
-        public static readonly Point WindowSize = new Point(70, 30);
+        public static readonly Point WindowSize = new Point(80, 35);
         //public static readonly Point WindowCenter = new Point(WindowSize.X / 2, WindowSize.Y / 2);
 
         public static readonly List<ConsoleKey> UniversalKeys = new List<ConsoleKey>() { ConsoleKey.Enter };
@@ -76,7 +79,7 @@ namespace RPG
         public static void InitializeWindow()
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
-            SetConsoleFont("NSimSun");
+            SetConsoleFont(FONT_NAME);
             DisableResizeCloseConsoleMenus();
 
             Console.Title = "RPG";
@@ -142,7 +145,8 @@ namespace RPG
                     Marshal.Copy(fontName.ToCharArray(), 0, ptr, fontName.Length);
 
                     // Get some settings from current font.
-                    newInfo.dwFontSize = new COORD(info.dwFontSize.X, info.dwFontSize.Y);
+                    //newInfo.dwFontSize = new COORD(info.dwFontSize.X, info.dwFontSize.Y);
+                    newInfo.dwFontSize = new COORD(info.dwFontSize.X, FONT_SIZE);
                     newInfo.FontWeight = info.FontWeight;
                     SetCurrentConsoleFontEx(hnd, false, ref newInfo);
                 }

@@ -4,7 +4,7 @@ namespace RPG
 {
     public class Fight
     {
-        private List<Combatant> _fighterList;
+        private readonly List<Combatant> _fighterList;
 
         public int Turns { get; private set; }
         public Combatant CurrentFighter { get; private set; }

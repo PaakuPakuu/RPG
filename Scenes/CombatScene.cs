@@ -4,7 +4,7 @@ namespace RPG
 {
     public class CombatScene : Scene
     {
-        private Fight _fight;
+        private readonly Fight _fight;
 
         public CombatScene()
         {
