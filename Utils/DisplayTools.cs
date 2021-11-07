@@ -110,8 +110,13 @@ namespace RPG
             }
         }
 
-        public static void WriteInWindowAt(string display, int x, int y)
-            => WriteInBufferAt(display, Console.WindowLeft + x, Console.WindowTop + y);
+        public static void WriteInWindowAt(string display, int x = -1, int y = -1)
+        {
+            x = (x == -1 ? (WindowSize.X - display.Length) / 2 : x);
+            y = (y == -1 ? WindowSize.Y / 2 : y);
+
+            WriteInBufferAt(display, Console.WindowLeft + x, Console.WindowTop + y);
+        }
 
         /// <summary>
         /// Disable resizing and closing actions on console.
