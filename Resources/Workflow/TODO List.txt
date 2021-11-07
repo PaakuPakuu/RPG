@@ -4,4 +4,5 @@ x Check si on peut controler la slidebar de la console -> ON PEUT
 
 • Partie du diagramme sur les items
 • Faire une première implémentation des inventaires
+• Se documenter sur l'utilisation d'Entity Framework
 • Gérer l'appui prolongé pour se déplacer avec le timer (optionnel)
