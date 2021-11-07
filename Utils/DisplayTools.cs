@@ -75,6 +75,9 @@ namespace RPG
         public static readonly string Underlined = "\u001b[4m";
         public static readonly string Reversed = "\u001b[7m";
 
+        // Colors
+        public static readonly string Yellow = "\u001b[33m";
+
         #endregion
 
         public static readonly Point WindowSize = new Point(80, 35);

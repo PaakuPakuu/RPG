@@ -33,7 +33,8 @@ namespace RPG
                 new string[2] { "-", "-" },
                 new string[2] { DisplayTools.Bold, DisplayTools.Reset },
                 new string[2] { DisplayTools.Underlined, DisplayTools.Reset },
-                new string[2] { DisplayTools.Reversed, DisplayTools.Reset }
+                new string[2] { DisplayTools.Reversed, DisplayTools.Reset },
+                new string[2] { DisplayTools.Yellow, DisplayTools.Reset }
             };
 
         private int _maxMenuItemLength;
@@ -56,7 +57,8 @@ namespace RPG
             Dashes,
             Bold,
             Underlined,
-            Reversed
+            Reversed,
+            Yellow
         }
 
         public ContextualMenu(int x, int y, bool horizontal = false, bool centered = false, int padding = 0,
@@ -189,8 +191,6 @@ namespace RPG
                 menu = _optionList[index];
                 leftSelectorPosition = menu.Position - new Point(x: SELECTORS_PADDING);
                 rightSelectorPosition = menu.Position + new Point(x: menu.Text.Length + SELECTORS_PADDING - 1);
-
-                DisplayTools.WriteInWindowAt(menu.Position.ToString(), 40, 2);
 
                 // Write selectors
                 DisplayTools.WriteInWindowAt(leftSelector, leftSelectorPosition.X, leftSelectorPosition.Y);

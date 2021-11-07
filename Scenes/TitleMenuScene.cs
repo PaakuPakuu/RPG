@@ -9,7 +9,8 @@ namespace RPG
         public TitleMenuScene()
         {
             _titleMenu = new ContextualMenu(horizontal: false, centered: true, padding: 2, selectedStyle: ContextualMenu.SelectedStyle.DoubleArrow);
-            _titleMenu.AddMenuItem("Jouer", LaunchGameScene);
+            _titleMenu.AddMenuItem($"Tester les menus", LaunchMenuTestScene);
+            _titleMenu.AddMenuItem($"Jouer", LaunchGameScene);
             _titleMenu.AddMenuItem("Options", LaunchSettingsScene);
             _titleMenu.AddMenuItem("Crédits", LaunchCreditsScene);
             _titleMenu.AddMenuItem("Quitter", EndGame);
@@ -28,6 +29,8 @@ namespace RPG
         }
 
         #region MenuItem actions
+
+        private void LaunchMenuTestScene() => Game.ActiveScene = new MenuTests();
 
         private void LaunchGameScene() => Game.ActiveScene = new GameScene();
 
