@@ -1,6 +1,6 @@
 x Partie du diagramme sur la gestion des scènes
 x Faire tests menus contextuels avec touches directionnelles
-x Check si on peut controler la slidebar de la console -> on peut pas. J'ai trouvé MoveBufferArea à la place
+x Check si on peut controler la slidebar de la console -> ON PEUT
 
 • Partie du diagramme sur les items
 • Faire une première implémentation des inventaires
