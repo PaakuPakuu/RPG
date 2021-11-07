@@ -1,18 +1,21 @@
 ﻿using System;
+using System.Text;
 
 namespace RPG
 {
     public class MenuItem
     {
-        public string Description { get; private set; }
+        public string Text { get; private set; }
         public Action MenuItemAction { get; private set; }
+        public Point Position { get; set; }
 
-        public MenuItem(string description, Action action)
+        public MenuItem(string text, Action action)
         {
-            Description = description;
+            Text = text;
             MenuItemAction = action;
+            Position = new Point();
         }
 
-        public override string ToString() => Description;
+        public override string ToString() => Text;
     }
 }

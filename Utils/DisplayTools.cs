@@ -10,7 +10,6 @@ namespace RPG
 
         private const int MF_BYCOMMAND = 0x00000000;
         private const int SC_CLOSE = 0xF060;
-        private const int SC_MINIMIZE = 0xF020;
         private const int SC_MAXIMIZE = 0xF030;
         private const int SC_SIZE = 0xF000;
 
@@ -66,6 +65,15 @@ namespace RPG
             IntPtr consoleOutput,
             bool maximumWindow,
             ref CONSOLE_FONT_INFO_EX consoleCurrentFontEx);
+
+        #endregion
+
+        #region ANSI Codes
+
+        public static readonly string Reset = "\u001b[0m";
+        public static readonly string Bold = "\u001b[1m";
+        public static readonly string Underlined = "\u001b[4m";
+        public static readonly string Reversed = "\u001b[7m";
 
         #endregion
 

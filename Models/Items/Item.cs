@@ -2,21 +2,36 @@
 {
     public abstract class Item : IDrawable
     {
-        public string Name { get; }
-        public string Sprite { get; }
+        public string Name
+        {
+            get => Name;
+            private set
+            {
+                Name = value;
+                if (value == string.Empty)
+                {
+                    Name = "No Name";
+                }
+            }
+        }
+        public string Sprite
+        {
+            get => Sprite;
+            private set
+            {
+                Sprite = value;
+                if (value == string.Empty)
+                {
+                    Sprite = "N";
+                }
+            }
+        }
 
         public Point Position { get; }
 
         protected Item(string name, string sprite)
         {
-            if (name == string.Empty)
-            {
-                Name = "No Name";
-            } else
-            {
-                Name = name;
-            }
-
+            Name = name;
             Sprite = sprite;
         }
 

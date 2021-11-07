@@ -4,113 +4,181 @@ using System.Text;
 
 namespace RPG
 {
-    public enum BorderStyle
-    {
-        None,
-        SimpleHard,
-        SimpleCurved,
-        DoubleHard,
-        DoubleCurved,
-        Dashed
-    }
-
     public class ContextualMenu
     {
-        private readonly bool _horizontalDisplay;
+        private const int SELECTORS_PADDING = 2;
+
         private readonly Point _position;
+        private readonly bool _horizontalDisplay;
         private readonly bool _centeredText;
         private readonly bool _centeredOnWindow;
-        private readonly BorderStyle _borderStyle;
         private readonly int _padding;
-        private int _maxMenuItemLength;
+        private readonly BorderStyle _borderStyle;
+        private readonly SelectedStyle _selectedStyle;
         private readonly List<MenuItem> _optionList;
 
-        public ContextualMenu(int x, int y, bool horizontal = false, bool centered = true, BorderStyle borderStyle = BorderStyle.None, int padding = 0)
+        private readonly string[] _borderSets = new string[]
+            {
+                "─│┐┘└┌",
+                "━┃┓┛┗┏",
+                "─│╮╯╰╭",
+                "═║╗╝╚╔",
+                "╌╎┐┘└┌",
+                "╍╏┓┛┗┏"
+            };
+        private readonly string[][] _selectionSets = new string[][]
+            {
+                new string[2] { ">", "" },
+                new string[2] { ">", "<" },
+                new string[2] { "-", "-" },
+                new string[2] { DisplayTools.Bold, DisplayTools.Reset },
+                new string[2] { DisplayTools.Underlined, DisplayTools.Reset },
+                new string[2] { DisplayTools.Reversed, DisplayTools.Reset }
+            };
+
+        private int _maxMenuItemLength;
+
+        public enum BorderStyle
+        {
+            None,
+            Simple,
+            SimpleHeavy,
+            SimpleCurved,
+            Double,
+            Dashed,
+            DashedHeavy
+        }
+
+        public enum SelectedStyle
+        {
+            Arrow,
+            DoubleArrow,
+            Dashes,
+            Bold,
+            Underlined,
+            Reversed
+        }
+
+        public ContextualMenu(int x, int y, bool horizontal = false, bool centered = false, int padding = 0,
+            BorderStyle borderStyle = BorderStyle.None, SelectedStyle selectedStyle = SelectedStyle.Reversed)
         {
             _horizontalDisplay = horizontal;
             _optionList = new List<MenuItem>();
             _position = new Point(x, y);
-            _centeredText = centered;
+            _centeredText = centered && !horizontal;
             _centeredOnWindow = false;
             _borderStyle = borderStyle;
+            _selectedStyle = selectedStyle;
             _padding = padding + 1;
             _maxMenuItemLength = 0;
+
+            if (_borderSets.Length != Enum.GetValues(borderStyle.GetType()).Length - 1)
+            {
+                throw new Exception("The border sets number must be equal to border style number.");
+            }
+
+            if (_selectionSets.Length != Enum.GetValues(selectedStyle.GetType()).Length)
+            {
+                throw new Exception("The selection sets number must be equal to selection style number.");
+            }
         }
 
-        public ContextualMenu(bool horizontal = false, bool centered = true, bool arrow = true, BorderStyle borderStyle = BorderStyle.None, int padding = 0)
-            : this(0, 0, horizontal, centered, borderStyle, padding)
+        public ContextualMenu(bool horizontal = false, bool centered = false, int padding = 0,
+            BorderStyle borderStyle = BorderStyle.None, SelectedStyle selectedStyle = SelectedStyle.Reversed)
+            : this(0, 0, horizontal, centered, padding, borderStyle, selectedStyle)
         {
             _centeredOnWindow = true;
         }
 
-        public void AddMenuItem(MenuItem menuItem)
+        public void AddMenuItem(string text, Action action)
         {
+            MenuItem menuItem = new MenuItem(text, action);
             _optionList.Add(menuItem);
-            
+
             if (menuItem.ToString().Length > _maxMenuItemLength)
             {
                 _maxMenuItemLength = menuItem.ToString().Length;
             }
         }
 
-        public void AddMenuItem(string description, Action action) => AddMenuItem(new MenuItem(description, action));
-
         public void Execute()
         {
-            if (_centeredOnWindow)
-            {
-                _position.X = (DisplayTools.WindowSize.X - _maxMenuItemLength) / 2;
-                _position.Y = (DisplayTools.WindowSize.Y - _optionList.Count) / 2;
-            }
-
-            DisplayTools.WriteInWindowAt(ToString(), _position.X, _position.Y);
-
-            //AskUserOption().MenuItemAction();
+            InitializeMenu();
+            ShowMenu();
+            StartSelection().MenuItemAction();
         }
-
+        
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
 
-            // factoriser ?
             foreach (MenuItem menuItem in _optionList)
             {
-                if (_horizontalDisplay)
+                sb.Append(menuItem.ToString());
+
+                if (menuItem != _optionList[^1])
                 {
-                    sb.Append(menuItem.ToString());
-
-                    if (menuItem != _optionList[^1])
-                    {
-                        sb.Append(' ', _padding);
-                    }
-                }
-                else
-                {
-                    if (_centeredText)
-                    {
-                        sb.Append(' ', (_maxMenuItemLength - menuItem.ToString().Length) / 2 + 1);
-                    }
-
-                    sb.Append(menuItem.ToString());
-
-                    if (menuItem != _optionList[^1])
-                    {
-                        sb.Append('\n', _padding);
-                    }
+                    sb.Append((_horizontalDisplay ? ' ' : '\n'), _padding);
                 }
             }
 
             return sb.ToString();
         }
 
-        private MenuItem AskUserOption()
+        private void InitializeMenu()
         {
+            if (_centeredOnWindow)
+            {
+                _position.X = (DisplayTools.WindowSize.X - (_horizontalDisplay ? ToString().Length : _maxMenuItemLength)) / 2;
+                _position.Y = (DisplayTools.WindowSize.Y - (_horizontalDisplay ? 0 : _optionList.Count * _padding)) / 2 + 1;
+            }
+
+            Point currentPosition;
+            MenuItem previousItem;
+
+            for (int i = 0; i < _optionList.Count; i++)
+            {
+                currentPosition = _optionList[i].Position;
+                currentPosition.Y = _position.Y;
+
+                if (_horizontalDisplay)
+                {
+                    if (i == 0)
+                    {
+                        currentPosition.X = _position.X;
+                    } else
+                    {
+                        previousItem = _optionList[i - 1];
+                        currentPosition.X = previousItem.Position.X + previousItem.Text.Length + _padding;
+                    }
+                }
+                else
+                {
+                    currentPosition.X = _position.X + (_centeredText ? (_maxMenuItemLength - _optionList[i].Text.Length) / 2 : 0);
+                    currentPosition.Y += i * _padding;
+                }
+            }
+        }
+
+        private void ShowMenu()
+        {
+            foreach (MenuItem menu in _optionList)
+            {
+                DisplayTools.WriteInWindowAt(menu.Text, menu.Position.X, menu.Position.Y);
+            }
+        }
+
+        private MenuItem StartSelection(int startIndex = 0)
+        {
+            
             bool stopMenu = false;
             bool validKey = false;
-            int index = 0;
-            int x1 = _position.X - 2;
-            int x2 = _position.X + 2;
-            int y = _position.Y + index + _padding;
+            int index = startIndex;
+            string leftSelector = _selectionSets[(int)_selectedStyle][0];
+            string rightSelector = _selectionSets[(int)_selectedStyle][1];
+            Point leftSelectorPosition;
+            Point rightSelectorPosition;
+            MenuItem menu;
 
             List<ConsoleKey> validKeys = (!_horizontalDisplay ? DisplayTools.VerticalMenuKeys : DisplayTools.HorizontalMenuKeys);
             validKeys.AddRange(DisplayTools.UniversalKeys);
@@ -118,8 +186,16 @@ namespace RPG
 
             while (!stopMenu)
             {
-                DisplayTools.WriteInWindowAt("> ", x1, y);
-                DisplayTools.WriteInWindowAt(" <", x2, y);
+                menu = _optionList[index];
+                leftSelectorPosition = menu.Position - new Point(x: SELECTORS_PADDING);
+                rightSelectorPosition = menu.Position + new Point(x: menu.Text.Length + SELECTORS_PADDING - 1);
+
+                DisplayTools.WriteInWindowAt(menu.Position.ToString(), 40, 2);
+
+                // Write selectors
+                DisplayTools.WriteInWindowAt(leftSelector, leftSelectorPosition.X, leftSelectorPosition.Y);
+                DisplayTools.WriteInWindowAt(menu.Text, menu.Position.X, menu.Position.Y);
+                DisplayTools.WriteInWindowAt(rightSelector, rightSelectorPosition.X, rightSelectorPosition.Y);
 
                 while (!validKey)
                 {
@@ -127,17 +203,25 @@ namespace RPG
                     validKey = validKeys.Contains(keyPressed);
                 }
 
-                DisplayTools.WriteInWindowAt("  ", x1, y);
-                DisplayTools.WriteInWindowAt("  ", x2, y);
-
                 if (keyPressed == ConsoleKey.LeftArrow && _horizontalDisplay || keyPressed == ConsoleKey.UpArrow)
                 {
-                    index--;
+                    if (index > 0)
+                    {
+                        index--;
+                    }
                 }
-                else if (keyPressed == ConsoleKey.RightArrow && !_horizontalDisplay || keyPressed == ConsoleKey.DownArrow)
+                else if (keyPressed == ConsoleKey.RightArrow && _horizontalDisplay || keyPressed == ConsoleKey.DownArrow)
                 {
-                    index++;
+                    if (index < _optionList.Count - 1)
+                    {
+                        index++;
+                    }
                 }
+
+                // Erase old selectors
+                DisplayTools.WriteInWindowAt("  ", leftSelectorPosition.X, leftSelectorPosition.Y);
+                DisplayTools.WriteInWindowAt(menu.Text, menu.Position.X, menu.Position.Y);
+                DisplayTools.WriteInWindowAt("  ", rightSelectorPosition.X, rightSelectorPosition.Y);
 
                 stopMenu = keyPressed == ConsoleKey.Enter;
                 validKey = false;

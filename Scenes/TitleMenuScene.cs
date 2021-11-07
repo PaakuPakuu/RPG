@@ -8,7 +8,7 @@ namespace RPG
 
         public TitleMenuScene()
         {
-            _titleMenu = new ContextualMenu(padding: 1);
+            _titleMenu = new ContextualMenu(horizontal: false, centered: true, padding: 2, selectedStyle: ContextualMenu.SelectedStyle.DoubleArrow);
             _titleMenu.AddMenuItem("Jouer", LaunchGameScene);
             _titleMenu.AddMenuItem("Options", LaunchSettingsScene);
             _titleMenu.AddMenuItem("Crédits", LaunchCreditsScene);
@@ -23,9 +23,8 @@ namespace RPG
 ░ Chemins pavés
 ▲ Fiole pleine
 △ Fiole vide"
-            , 1, 1);
+            , 4, 2);
             _titleMenu.Execute();
-            Console.ReadKey();
         }
 
         #region MenuItem actions
