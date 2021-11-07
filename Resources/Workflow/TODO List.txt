@@ -1,8 +1,7 @@
-• Partie du diagramme sur la gestion des scènes
-• Partie du diagramme sur les items
+x Partie du diagramme sur la gestion des scènes
 x Faire tests menus contextuels avec touches directionnelles
-• Mettre à jour les classes
 x Check si on peut controler la slidebar de la console -> on peut pas. J'ai trouvé MoveBufferArea à la place
-• Gérer l'appui prolongé pour se déplacer avec le timer
 
-• Mode histoire + mode arcade ?
+• Partie du diagramme sur les items
+• Faire une première implémentation des inventaires
+• Gérer l'appui prolongé pour se déplacer avec le timer (optionnel)
