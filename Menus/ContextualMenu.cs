@@ -34,7 +34,8 @@ namespace RPG
                 new string[2] { DisplayTools.Bold, DisplayTools.Reset },
                 new string[2] { DisplayTools.Underlined, DisplayTools.Reset },
                 new string[2] { DisplayTools.Reversed, DisplayTools.Reset },
-                new string[2] { DisplayTools.Yellow, DisplayTools.Reset }
+                new string[2] { DisplayTools.Yellow, DisplayTools.Reset },
+                new string[2] { DisplayTools.Green, DisplayTools.Reset }
             };
 
         private int _maxMenuItemLength;
@@ -58,7 +59,8 @@ namespace RPG
             Bold,
             Underlined,
             Reversed,
-            Yellow
+            Yellow,
+            Green
         }
 
         public ContextualMenu(int x, int y, bool horizontal = false, bool centered = false, int padding = 0,

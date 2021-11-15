@@ -77,11 +77,14 @@ namespace RPG
 
         // Colors
         public static readonly string Yellow = "\u001b[33m";
+        public static readonly string Green = "\u001b[32m";
 
         #endregion
 
         public static readonly Point WindowSize = new Point(80, 35);
         //public static readonly Point WindowCenter = new Point(WindowSize.X / 2, WindowSize.Y / 2);
+        public static readonly int RightPadding = 3;
+        public static readonly int BottomPadding = 2;
 
         public static readonly List<ConsoleKey> UniversalKeys = new List<ConsoleKey>() { ConsoleKey.Enter };
         public static readonly List<ConsoleKey> VerticalMenuKeys = new List<ConsoleKey>() { ConsoleKey.UpArrow, ConsoleKey.DownArrow };
@@ -99,15 +102,27 @@ namespace RPG
             Console.CursorVisible = false;
         }
 
+        public static void WriteInBufferAt(string[] display, int x, int y)
+        {
+            for (int i = 0; i < display.Length; i++)
+            {
+                Console.SetCursorPosition(x, y + i);
+                Console.Write(display[i]);
+            }
+        }
+
         public static void WriteInBufferAt(string display, int x, int y)
         {
             List<string> splittedDisplay = new List<string>(display.Split('\n'));
+            WriteInBufferAt(splittedDisplay.ToArray(), x, y);
+        }
 
-            for (int i = 0; i < splittedDisplay.Count; i++)
-            {
-                Console.SetCursorPosition(x, y + i);
-                Console.Write(splittedDisplay[i]);
-            }
+        public static void WriteInWindowAt(string[] display, int x, int y)
+        {
+            x = (x == -1 ? (WindowSize.X - display.Length) / 2 : x);
+            y = (y == -1 ? WindowSize.Y / 2 : y);
+
+            WriteInBufferAt(display, Console.WindowLeft + x, Console.WindowTop + y);
         }
 
         public static void WriteInWindowAt(string display, int x = -1, int y = -1)

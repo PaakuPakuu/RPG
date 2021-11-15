@@ -4,12 +4,12 @@ using System.Text;
 
 namespace RPG
 {
-    public class MenuTests : Scene
+    public class MenuTestScene : Scene
     {
         private ContextualMenu _cm;
         private bool _goToTitleMenu;
 
-        public MenuTests()
+        public MenuTestScene()
         {
             VerticalUnderligned();
             _goToTitleMenu = false;
