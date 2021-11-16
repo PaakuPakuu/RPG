@@ -72,6 +72,8 @@ namespace RPG
 
         public bool Move(Direction direction)
         {
+            bool hasRotated = (direction != LookingAt);
+
             LookingAt = direction;
             PreviousPosition.X = Position.X;
             PreviousPosition.Y = Position.Y;
@@ -81,7 +83,7 @@ namespace RPG
                 case Direction.Top:
                     if (Position.Y <= 0)
                     {
-                        return false;
+                        return hasRotated;
                     }
 
                     Position.Y--;
@@ -90,7 +92,7 @@ namespace RPG
                 case Direction.Right:
                     if (Position.X >= _currentMap.Width - 1)
                     {
-                        return false;
+                        return hasRotated;
                     }
 
                     Position.X++;
@@ -99,7 +101,7 @@ namespace RPG
                 case Direction.Bottom:
                     if (Position.Y >= _currentMap.Height - 1)
                     {
-                        return false;
+                        return hasRotated;
                     }
 
                     Position.Y++;
@@ -108,7 +110,7 @@ namespace RPG
                 case Direction.Left:
                     if (Position.X <= 0)
                     {
-                        return false;
+                        return hasRotated;
                     }
 
                     Position.X--;
@@ -120,12 +122,12 @@ namespace RPG
 
         public void Draw()
         {
-            DisplayTools.WriteInBufferAt(Sprite, Position.X + _currentMap.PositionInBuffer.X, Position.Y + _currentMap.PositionInBuffer.Y);
             DisplayTools.WriteInBufferAt(
                 _currentMap.MapDisplay[PreviousPosition.Y][PreviousPosition.X].ToString(),
                 PreviousPosition.X + _currentMap.PositionInBuffer.X,
                 PreviousPosition.Y + _currentMap.PositionInBuffer.Y
                 );
+            DisplayTools.WriteInBufferAt(Sprite, Position.X + _currentMap.PositionInBuffer.X, Position.Y + _currentMap.PositionInBuffer.Y);
         }
     }
 }
