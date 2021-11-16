@@ -21,6 +21,8 @@ namespace RPG
             _player = new Player(_map, "player");
 
             _pauseMenu = new ContextualMenu();
+            _pauseMenu.AddMenuItem("Reprendre", LeavePauseMenu);
+            _pauseMenu.AddMenuItem("Quitter", LaunchTitleMenuScene);
         }
 
         public override void ExecuteScene()
@@ -53,11 +55,26 @@ namespace RPG
                     case Player.PlayerAction.TriggerAction:
                         break;
                     case Player.PlayerAction.Pause:
+                        _pauseMenu.Execute();
                         break;
                 }
             }
+        }
 
+        #region Actions
+
+        private void LeavePauseMenu()
+        {
+            _map.PrintMap();
+            _player.Draw();
+        }
+
+        private void LaunchTitleMenuScene()
+        {
+            _changeMenu = true;
             Game.ActiveScene = new TitleMenuScene();
         }
+
+        #endregion
     }
 }
