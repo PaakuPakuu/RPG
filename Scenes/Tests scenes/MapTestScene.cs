@@ -20,7 +20,7 @@ namespace RPG
 
             _player = new Player(_map, "player");
 
-            _pauseMenu = new ContextualMenu();
+            _pauseMenu = new ContextualMenu(centered: true, padding: 1);
             _pauseMenu.AddMenuItem("Reprendre", LeavePauseMenu);
             _pauseMenu.AddMenuItem("Quitter", LaunchTitleMenuScene);
         }
@@ -38,6 +38,7 @@ namespace RPG
                 {
                     _player.Draw();
                     hasMoved = false;
+                    UpdateWindowPosition();
                 }
 
                 action = _player.WaitForAction();
@@ -58,6 +59,22 @@ namespace RPG
                         _pauseMenu.Execute();
                         break;
                 }
+            }
+        }
+
+        private void UpdateWindowPosition()
+        {
+            int windowX = _player.Position.X + _map.PositionInBuffer.X - Console.WindowWidth / 2;
+            int windowY = _player.Position.Y + _map.PositionInBuffer.Y - Console.WindowHeight / 2;
+
+            if (windowX >= 0 && windowX <= Console.BufferWidth - Console.WindowWidth)
+            {
+                Console.WindowLeft = windowX;
+            }
+
+            if (windowY >= 0 && windowY <= Console.BufferHeight - Console.WindowHeight)
+            {
+                Console.WindowTop = windowY;
             }
         }
 
