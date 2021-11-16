@@ -23,6 +23,8 @@ namespace RPG
 
         public override void ExecuteScene()
         {
+            Console.SetBufferSize(ScreenWidth, ScreenHeight);
+
             DisplayTools.WriteInWindowAt(
 @"█ Bordures de map
 ⍈⍇⍐⍗ Map connectors
