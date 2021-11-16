@@ -9,14 +9,14 @@
 
         protected Scene(int width, int height)
         {
-            _defaultCM = new ContextualMenu(x: DisplayTools.WindowSize.X - 10, y: DisplayTools.WindowSize.Y - 2);
+            _defaultCM = new ContextualMenu(x: DisplayTools.WindowWidth - 10, y: DisplayTools.WindowHeight - 2);
             _defaultCM.AddMenuItem(" RETOUR ", () => Game.ActiveScene = new TitleMenuScene());
 
             ScreenWidth = width;
             ScreenHeight = height;
         }
 
-        protected Scene() : this(DisplayTools.WindowSize.X, DisplayTools.WindowSize.Y) { }
+        protected Scene() : this(DisplayTools.WindowWidth, DisplayTools.WindowHeight) { }
 
         public virtual void ExecuteScene()
         {

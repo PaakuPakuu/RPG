@@ -133,8 +133,8 @@ namespace RPG
         {
             if (_centeredOnWindow)
             {
-                _position.X = (DisplayTools.WindowSize.X - (_horizontalDisplay ? ToString().Length : _maxMenuItemLength)) / 2;
-                _position.Y = (DisplayTools.WindowSize.Y - (_horizontalDisplay ? 0 : _optionList.Count * _padding)) / 2 + 1;
+                _position.X = (DisplayTools.WindowWidth - (_horizontalDisplay ? ToString().Length : _maxMenuItemLength)) / 2;
+                _position.Y = (DisplayTools.WindowHeight - (_horizontalDisplay ? 0 : _optionList.Count * _padding)) / 2 + 1;
             }
 
             Point currentPosition;
