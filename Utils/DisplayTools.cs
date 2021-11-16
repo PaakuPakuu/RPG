@@ -81,10 +81,11 @@ namespace RPG
 
         #endregion
 
-        public static readonly Point WindowSize = new Point(80, 35);
+        public static readonly int WindowWidth = 80;
+        public static readonly int WindowHeight = 35;
         //public static readonly Point WindowCenter = new Point(WindowSize.X / 2, WindowSize.Y / 2);
-        public static readonly int RightPadding = 3;
-        public static readonly int BottomPadding = 2;
+        public static readonly int WidthMargin = 4;
+        public static readonly int HeightMargin = 2;
 
         public static readonly List<ConsoleKey> UniversalKeys = new List<ConsoleKey>() { ConsoleKey.Enter };
         public static readonly List<ConsoleKey> VerticalMenuKeys = new List<ConsoleKey>() { ConsoleKey.UpArrow, ConsoleKey.DownArrow };
@@ -97,8 +98,8 @@ namespace RPG
             DisableResizeCloseConsoleMenus();
 
             Console.Title = "RPG";
-            Console.SetWindowSize(WindowSize.X, WindowSize.Y);
-            Console.SetBufferSize(WindowSize.X, WindowSize.Y);
+            Console.SetWindowSize(WindowWidth, WindowHeight);
+            Console.SetBufferSize(WindowWidth, WindowHeight);
             Console.CursorVisible = false;
         }
 
@@ -119,16 +120,16 @@ namespace RPG
 
         public static void WriteInWindowAt(string[] display, int x, int y)
         {
-            x = (x == -1 ? (WindowSize.X - display.Length) / 2 : x);
-            y = (y == -1 ? WindowSize.Y / 2 : y);
+            x = (x == -1 ? (WindowWidth - display.Length) / 2 : x);
+            y = (y == -1 ? WindowHeight / 2 : y);
 
             WriteInBufferAt(display, Console.WindowLeft + x, Console.WindowTop + y);
         }
 
         public static void WriteInWindowAt(string display, int x = -1, int y = -1)
         {
-            x = (x == -1 ? (WindowSize.X - display.Length) / 2 : x);
-            y = (y == -1 ? WindowSize.Y / 2 : y);
+            x = (x == -1 ? (WindowWidth - display.Length) / 2 : x);
+            y = (y == -1 ? WindowHeight / 2 : y);
 
             WriteInBufferAt(display, Console.WindowLeft + x, Console.WindowTop + y);
         }
