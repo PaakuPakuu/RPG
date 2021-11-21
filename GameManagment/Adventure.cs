@@ -4,11 +4,6 @@ namespace RPG
 {
     public abstract class Adventure
     {
-        protected readonly List<Map> _mapList;
-
-        protected Adventure()
-        {
-            _mapList = new List<Map>();
-        }
+        public Map CurrentMap { get; set; }
     }
 }

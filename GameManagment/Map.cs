@@ -10,7 +10,7 @@ namespace RPG
         private const string MAPS_PATH = "Resources/Maps";
         private const string DEFAULT_MAP_PATH = MAPS_PATH + "/DefaultMap.map";
 
-        private readonly List<ITriggerable> _triggerables;
+        private readonly ITriggerable[,] _triggerables;
         private readonly List<IDrawable> _drawables;
 
         private int _width;
@@ -22,11 +22,9 @@ namespace RPG
         public string[] MapDisplay { get; }
         public Point SpawnPosition { get; }
 
-        public Map(string fileName)
+        public Map(string fileName = "")
         {
-            _triggerables = new List<ITriggerable>();
-            _drawables = new List<IDrawable>();
-
+            // Get ascii display from .map file
             try
             {
                 MapDisplay = File.ReadAllLines($"{MAPS_PATH}/{fileName}.map");
@@ -40,6 +38,9 @@ namespace RPG
             _height = MapDisplay.Length;
             PositionInBuffer = new Point(DisplayTools.WidthMargin, DisplayTools.HeightMargin);
             SpawnPosition = new Point(1, 1);
+
+            _triggerables = new ITriggerable[_height, _width];
+            _drawables = new List<IDrawable>();
         }
 
         public void PrintMap()
@@ -52,6 +53,35 @@ namespace RPG
 
             Console.SetBufferSize(bufferWidth, bufferHeight);
             DisplayTools.WriteInBufferAt(MapDisplay, PositionInBuffer.X, PositionInBuffer.Y);
+        }
+
+        public void ConnectToMap(Map target, Point connectorPos, Direction connectorDir)
+        {
+            MapConnector mc = new MapConnector(target, connectorPos, connectorDir);
+
+            _triggerables[connectorPos.Y, connectorPos.X] = mc;
+            _drawables.Add(mc);
+        }
+
+        public bool TryToTrigger(Point position)
+        {
+            ITriggerable t = _triggerables[position.Y, position.X];
+
+            if (t == null)
+            {
+                return false;
+            }
+
+            t.OnTrigger();
+            return true;
+        }
+
+        public void DrawDrawables()
+        {
+            foreach (IDrawable d in _drawables)
+            {
+                d.Draw();
+            }
         }
     }
 }

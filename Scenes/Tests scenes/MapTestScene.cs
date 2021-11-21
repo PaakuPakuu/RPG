@@ -6,19 +6,22 @@ namespace RPG
 {
     public sealed class MapTestScene : Scene
     {
-        private Map _map;
-        private bool _changeMenu;
-
         private Player _player;
 
+        private Adventure _adventure;
+        private Map _currentMap;
+
+        private bool _changeMenu;
         private ContextualMenu _pauseMenu;
 
         public MapTestScene()
         {
-            _map = new Map("MainTown");
+            _adventure = new AdventureTest();
+
+            _currentMap = _adventure.CurrentMap;
             _changeMenu = false;
 
-            _player = new Player(_map, "player");
+            _player = new Player("player");
 
             _pauseMenu = new ContextualMenu(centered: true, padding: 1);
             _pauseMenu.AddMenuItem("Reprendre", LeavePauseMenu);
@@ -30,7 +33,7 @@ namespace RPG
             Player.PlayerAction action;
             bool hasMoved = true;
 
-            _map.PrintMap();
+            _currentMap.PrintMap();
 
             while (!_changeMenu)
             {
@@ -54,6 +57,7 @@ namespace RPG
                     case Player.PlayerAction.OpenInventory:
                         break;
                     case Player.PlayerAction.TriggerAction:
+                        _currentMap.TryToTrigger(_player.Position);
                         break;
                     case Player.PlayerAction.Pause:
                         _pauseMenu.Execute();
@@ -64,8 +68,8 @@ namespace RPG
 
         private void UpdateWindowPosition()
         {
-            int windowX = _player.Position.X + _map.PositionInBuffer.X - Console.WindowWidth / 2;
-            int windowY = _player.Position.Y + _map.PositionInBuffer.Y - Console.WindowHeight / 2;
+            int windowX = _player.Position.X + _currentMap.PositionInBuffer.X - Console.WindowWidth / 2;
+            int windowY = _player.Position.Y + _currentMap.PositionInBuffer.Y - Console.WindowHeight / 2;
 
             if (windowX >= 0 && windowX <= Console.BufferWidth - Console.WindowWidth)
             {
@@ -82,7 +86,7 @@ namespace RPG
 
         private void LeavePauseMenu()
         {
-            _map.PrintMap();
+            _currentMap.PrintMap();
             _player.Draw();
         }
 

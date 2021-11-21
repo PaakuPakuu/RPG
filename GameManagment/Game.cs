@@ -15,7 +15,7 @@ namespace RPG
         private bool _isRunning;
 
         public static Scene ActiveScene { private get; set; }
-        public static Adventure Adventure { get; }
+        public static Adventure Adventure { get; private set; }
 
         public static Game GameInstance
         {
@@ -24,13 +24,14 @@ namespace RPG
 
         private Game()
         {
-            ActiveScene = new TitleMenuScene();
             _isRunning = false;
+            ActiveScene = new TitleMenuScene();
         }
 
-        public void LaunchGame()
+        public void LaunchGame(Adventure adventure)
         {
             DisplayTools.InitializeWindow();
+            Adventure = adventure;
             _isRunning = true;
 
             while (_isRunning)

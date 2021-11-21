@@ -24,11 +24,11 @@ namespace RPG
             Pause
         }
 
-        public Player(Map currentMap, string name) : base(name)
+        public Player(string name) : base(name)
         {
-            _currentMap = currentMap;
+            _currentMap = Game.Adventure.CurrentMap;
             PreviousPosition = new Point();
-            Position = currentMap.SpawnPosition;
+            Position = _currentMap.SpawnPosition;
         }
 
         public void Die()
@@ -127,6 +127,9 @@ namespace RPG
                 PreviousPosition.X + _currentMap.PositionInBuffer.X,
                 PreviousPosition.Y + _currentMap.PositionInBuffer.Y
                 );
+
+            _currentMap.DrawDrawables();
+
             DisplayTools.WriteInBufferAt(Sprite, Position.X + _currentMap.PositionInBuffer.X, Position.Y + _currentMap.PositionInBuffer.Y);
         }
     }
