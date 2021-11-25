@@ -6,12 +6,11 @@ namespace RPG
     {
         private readonly char[] _sprites = new char[] { '⇑', '⇒', '⇓', '⇐' };
 
-        private Map _currentMap;
-
         public Direction LookingAt { get; private set; }
         public Point PreviousPosition { get; private set; }
         public Point Position { get; }
         public string Sprite { get => _sprites[(int)LookingAt].ToString(); }
+        public Map Origin { get; set; }
 
         public enum PlayerAction
         {
@@ -26,9 +25,9 @@ namespace RPG
 
         public Player(string name) : base(name)
         {
-            _currentMap = Game.Adventure.CurrentMap;
+            Origin = Game.Adventure.CurrentMap;
             PreviousPosition = new Point();
-            Position = _currentMap.SpawnPosition;
+            Position = Origin.SpawnPosition;
         }
 
         public void Die()
@@ -90,7 +89,7 @@ namespace RPG
                     break;
 
                 case Direction.Right:
-                    if (Position.X >= _currentMap.Width - 1)
+                    if (Position.X >= Origin.Width - 1)
                     {
                         return hasRotated;
                     }
@@ -99,7 +98,7 @@ namespace RPG
                     break;
 
                 case Direction.Bottom:
-                    if (Position.Y >= _currentMap.Height - 1)
+                    if (Position.Y >= Origin.Height - 1)
                     {
                         return hasRotated;
                     }
@@ -123,14 +122,14 @@ namespace RPG
         public void Draw()
         {
             DisplayTools.WriteInBufferAt(
-                _currentMap.MapDisplay[PreviousPosition.Y][PreviousPosition.X].ToString(),
-                PreviousPosition.X + _currentMap.PositionInBuffer.X,
-                PreviousPosition.Y + _currentMap.PositionInBuffer.Y
+                Origin.MapDisplay[PreviousPosition.Y][PreviousPosition.X].ToString(),
+                PreviousPosition.X + Origin.PositionInBuffer.X,
+                PreviousPosition.Y + Origin.PositionInBuffer.Y
                 );
 
-            _currentMap.DrawDrawables();
+            Origin.DrawDrawables();
 
-            DisplayTools.WriteInBufferAt(Sprite, Position.X + _currentMap.PositionInBuffer.X, Position.Y + _currentMap.PositionInBuffer.Y);
+            DisplayTools.WriteInBufferAt(Sprite, Position.X + Origin.PositionInBuffer.X, Position.Y + Origin.PositionInBuffer.Y);
         }
     }
 }

@@ -8,20 +8,14 @@ namespace RPG
     {
         private Player _player;
 
-        private Adventure _adventure;
-        private Map _currentMap;
-
         private bool _changeMenu;
         private ContextualMenu _pauseMenu;
 
         public MapTestScene()
         {
-            _adventure = new AdventureTest();
-
-            _currentMap = _adventure.CurrentMap;
             _changeMenu = false;
 
-            _player = new Player("player");
+            _player = new Player("player", Game.Adventure.CurrentMap);
 
             _pauseMenu = new ContextualMenu(centered: true, padding: 1);
             _pauseMenu.AddMenuItem("Reprendre", LeavePauseMenu);
@@ -31,13 +25,20 @@ namespace RPG
         public override void ExecuteScene()
         {
             Player.PlayerAction action;
+            bool updateMap = true;
             bool hasMoved = true;
-
-            _currentMap.PrintMap();
 
             while (!_changeMenu)
             {
-                if (hasMoved)
+                if (updateMap)
+                {
+                    Game.Adventure.CurrentMap.PrintMap();
+                    _player.Draw();
+                    updateMap = false;
+                    UpdateWindowPosition();
+                }
+
+                if (hasMoved || updateMap)
                 {
                     _player.Draw();
                     hasMoved = false;
@@ -57,7 +58,8 @@ namespace RPG
                     case Player.PlayerAction.OpenInventory:
                         break;
                     case Player.PlayerAction.TriggerAction:
-                        _currentMap.TryToTrigger(_player.Position);
+                        updateMap = Game.Adventure.CurrentMap.TryToTrigger(_player.Position);
+                        _player.Origin = Game.Adventure.CurrentMap;
                         break;
                     case Player.PlayerAction.Pause:
                         _pauseMenu.Execute();
@@ -68,8 +70,8 @@ namespace RPG
 
         private void UpdateWindowPosition()
         {
-            int windowX = _player.Position.X + _currentMap.PositionInBuffer.X - Console.WindowWidth / 2;
-            int windowY = _player.Position.Y + _currentMap.PositionInBuffer.Y - Console.WindowHeight / 2;
+            int windowX = _player.Position.X + Game.Adventure.CurrentMap.PositionInBuffer.X - Console.WindowWidth / 2;
+            int windowY = _player.Position.Y + Game.Adventure.CurrentMap.PositionInBuffer.Y - Console.WindowHeight / 2;
 
             if (windowX >= 0 && windowX <= Console.BufferWidth - Console.WindowWidth)
             {
@@ -86,7 +88,7 @@ namespace RPG
 
         private void LeavePauseMenu()
         {
-            _currentMap.PrintMap();
+            Game.Adventure.CurrentMap.PrintMap();
             _player.Draw();
         }
 

@@ -1,6 +1,6 @@
 ﻿namespace RPG
 {
-    public abstract class Item : IDrawable
+    public abstract class Item
     {
         public string Name
         {
@@ -27,8 +27,6 @@
             }
         }
 
-        public Point Position { get; }
-
         protected Item(string name, string sprite)
         {
             Name = name;
@@ -36,10 +34,5 @@
         }
 
         public abstract bool Apply(Combatant target);
-
-        public void Draw()
-        {
-            DisplayTools.WriteInBufferAt(Sprite, Position.X, Position.Y);
-        }
     }
 }

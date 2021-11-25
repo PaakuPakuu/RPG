@@ -49,7 +49,7 @@ namespace RPG
             int extendedMapHeight = _height + PositionInBuffer.Y * 2;
 
             int bufferWidth = (extendedMapWidth <= DisplayTools.WindowWidth ? DisplayTools.WindowWidth : extendedMapWidth);
-            int bufferHeight = (extendedMapHeight<= DisplayTools.WindowHeight? DisplayTools.WindowHeight : extendedMapHeight);
+            int bufferHeight = (extendedMapHeight <= DisplayTools.WindowHeight? DisplayTools.WindowHeight : extendedMapHeight);
 
             Console.SetBufferSize(bufferWidth, bufferHeight);
             DisplayTools.WriteInBufferAt(MapDisplay, PositionInBuffer.X, PositionInBuffer.Y);
@@ -57,7 +57,7 @@ namespace RPG
 
         public void ConnectToMap(Map target, Point connectorPos, Direction connectorDir)
         {
-            MapConnector mc = new MapConnector(target, connectorPos, connectorDir);
+            MapConnector mc = new MapConnector(this, target, connectorPos, connectorDir);
 
             _triggerables[connectorPos.Y, connectorPos.X] = mc;
             _drawables.Add(mc);

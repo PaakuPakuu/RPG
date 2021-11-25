@@ -1,9 +1,12 @@
-﻿namespace RPG
+﻿using System;
+
+namespace RPG
 {
     public interface IDrawable : ILocatable2D
     {
-        public string Sprite { get; }
+        Map Origin { get; }
+        string Sprite { get; }
 
-        public void Draw();
+        void Draw();
     }
 }
