@@ -10,7 +10,6 @@ namespace RPG
         public Point PreviousPosition { get; private set; }
         public Point Position { get; }
         public string Sprite { get => _sprites[(int)LookingAt].ToString(); }
-        public Map Origin { get; set; }
 
         public enum PlayerAction
         {
@@ -25,9 +24,8 @@ namespace RPG
 
         public Player(string name) : base(name)
         {
-            Origin = Game.Adventure.CurrentMap;
             PreviousPosition = new Point();
-            Position = Origin.SpawnPosition;
+            Position = Game.CurrentMap.SpawnPosition;
         }
 
         public void Die()
@@ -89,7 +87,7 @@ namespace RPG
                     break;
 
                 case Direction.Right:
-                    if (Position.X >= Origin.Width - 1)
+                    if (Position.X >= Game.CurrentMap.Width - 1)
                     {
                         return hasRotated;
                     }
@@ -98,7 +96,7 @@ namespace RPG
                     break;
 
                 case Direction.Bottom:
-                    if (Position.Y >= Origin.Height - 1)
+                    if (Position.Y >= Game.CurrentMap.Height - 1)
                     {
                         return hasRotated;
                     }
@@ -122,14 +120,12 @@ namespace RPG
         public void Draw()
         {
             DisplayTools.WriteInBufferAt(
-                Origin.MapDisplay[PreviousPosition.Y][PreviousPosition.X].ToString(),
-                PreviousPosition.X + Origin.PositionInBuffer.X,
-                PreviousPosition.Y + Origin.PositionInBuffer.Y
+                Game.CurrentMap.MapDisplay[PreviousPosition.Y][PreviousPosition.X].ToString(),
+                PreviousPosition.X + Game.CurrentMap.PositionInBuffer.X,
+                PreviousPosition.Y + Game.CurrentMap.PositionInBuffer.Y
                 );
 
-            Origin.DrawDrawables();
-
-            DisplayTools.WriteInBufferAt(Sprite, Position.X + Origin.PositionInBuffer.X, Position.Y + Origin.PositionInBuffer.Y);
+            DisplayTools.WriteInBufferAt(Sprite, Position.X + Game.CurrentMap.PositionInBuffer.X, Position.Y + Game.CurrentMap.PositionInBuffer.Y);
         }
     }
 }

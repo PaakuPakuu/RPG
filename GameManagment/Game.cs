@@ -15,7 +15,7 @@ namespace RPG
         private bool _isRunning;
 
         public static Scene ActiveScene { private get; set; }
-        public static Adventure Adventure { get; private set; }
+        public static Map CurrentMap { get; set; } // TEMPORAIRE
 
         public static Game GameInstance
         {
@@ -28,10 +28,9 @@ namespace RPG
             ActiveScene = new TitleMenuScene();
         }
 
-        public void LaunchGame(Adventure adventure)
+        public void LaunchGame()
         {
             DisplayTools.InitializeWindow();
-            Adventure = adventure;
             _isRunning = true;
 
             while (_isRunning)

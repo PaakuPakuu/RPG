@@ -44,7 +44,7 @@ namespace RPG
 
         #region Actions
 
-        private void ChangeMap() => Game.Adventure.CurrentMap = _target;
+        private void ChangeMap() => Game.CurrentMap = _target;
 
         #endregion
     }

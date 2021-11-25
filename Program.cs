@@ -39,7 +39,7 @@
             Console.ReadKey();*/
 
             //Game.GameInstance.LaunchGame();
-            Game.GameInstance.LaunchGame(new AdventureTest());
+            Game.GameInstance.LaunchGame();
         }
     }
 }
