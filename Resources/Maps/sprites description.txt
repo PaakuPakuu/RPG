@@ -1,5 +1,9 @@
 SPRITE DESCRIPTION
 
+UI :
+▮ : segment de vie pleine
+▯ : segment de vie vide
+
 Murs:
 
 █ Bordures de map

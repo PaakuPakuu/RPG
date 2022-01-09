@@ -4,16 +4,16 @@ using System.Text;
 
 namespace RPG
 {
-    public sealed class MapTestScene : Scene
+    public class MapConnectorTestScene : Scene
     {
         private Player _player;
 
         private bool _changeScene;
         private ContextualMenu _pauseMenu;
 
-        public MapTestScene()
+        public MapConnectorTestScene()
         {
-            Game.CurrentMap = new Map("MainTown");
+            Game.CurrentMap = new Map();
 
             _player = new Player("player");
 

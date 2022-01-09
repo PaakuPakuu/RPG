@@ -11,9 +11,16 @@ namespace RPG
             Stats = new CombatantStats();
         }
 
-        public bool Attack(Combatant target)
+        public void Attack(Combatant target)
         {
-            throw new NotImplementedException();
+            target.TakeDamage(1);
+        }
+        
+        // Renvoie le montant réel des dégâts reçus
+        public int TakeDamage(int amount)
+        {
+            Stats.Health -= amount;
+            return amount;
         }
     }
 }

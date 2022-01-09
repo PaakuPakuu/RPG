@@ -11,7 +11,8 @@ namespace RPG
         private readonly Point _position;
         private readonly bool _horizontalDisplay;
         private readonly bool _centeredText;
-        private readonly bool _centeredOnWindow;
+        private readonly bool _centeredOnWindowWidth;
+        private readonly bool _centeredOnWindowHeight;
         private readonly int _padding;
         private readonly BorderStyle _borderStyle;
         private readonly SelectedStyle _selectedStyle;
@@ -63,18 +64,19 @@ namespace RPG
             Green
         }
 
-        public ContextualMenu(int x, int y, bool horizontal = false, bool centered = false, int padding = 0,
+        public ContextualMenu(int x = -1, int y = -1, bool horizontal = false, bool centered = false, int padding = 0,
             BorderStyle borderStyle = BorderStyle.None, SelectedStyle selectedStyle = SelectedStyle.Reversed)
         {
             _horizontalDisplay = horizontal;
             _optionList = new List<MenuItem>();
             _position = new Point(x, y);
             _centeredText = centered && !horizontal;
-            _centeredOnWindow = false;
             _borderStyle = borderStyle;
             _selectedStyle = selectedStyle;
             _padding = padding + 1;
             _maxMenuItemLength = 0;
+            _centeredOnWindowWidth = (x == -1);
+            _centeredOnWindowHeight = (y == -1);
 
             if (_borderSets.Length != Enum.GetValues(borderStyle.GetType()).Length - 1)
             {
@@ -87,12 +89,12 @@ namespace RPG
             }
         }
 
-        public ContextualMenu(bool horizontal = false, bool centered = false, int padding = 0,
-            BorderStyle borderStyle = BorderStyle.None, SelectedStyle selectedStyle = SelectedStyle.Reversed)
-            : this(0, 0, horizontal, centered, padding, borderStyle, selectedStyle)
-        {
-            _centeredOnWindow = true;
-        }
+        //public ContextualMenu(bool horizontal = false, bool centered = false, int padding = 0,
+        //    BorderStyle borderStyle = BorderStyle.None, SelectedStyle selectedStyle = SelectedStyle.Reversed)
+        //    : this(0, 0, horizontal, centered, padding, borderStyle, selectedStyle)
+        //{
+        //    _centeredOnWindow = true;
+        //}
 
         public void AddMenuItem(string text, Action action)
         {
@@ -131,9 +133,12 @@ namespace RPG
 
         private void InitializeMenu()
         {
-            if (_centeredOnWindow)
+            if (_centeredOnWindowWidth)
             {
                 _position.X = (DisplayTools.WindowWidth - (_horizontalDisplay ? ToString().Length : _maxMenuItemLength)) / 2;
+            }
+            if (_centeredOnWindowHeight)
+            {
                 _position.Y = (DisplayTools.WindowHeight - (_horizontalDisplay ? 0 : _optionList.Count * _padding)) / 2 + 1;
             }
 

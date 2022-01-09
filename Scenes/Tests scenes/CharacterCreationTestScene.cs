@@ -4,8 +4,7 @@ using System.Text;
 
 namespace RPG
 {
-    public class MapNetwork
+    public class CharacterCreationTestScene : Scene
     {
-
     }
 }

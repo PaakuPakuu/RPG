@@ -25,13 +25,15 @@ namespace RPG
         private Game()
         {
             _isRunning = false;
-            ActiveScene = new TitleMenuScene();
         }
 
         public void LaunchGame()
         {
             DisplayTools.InitializeWindow();
+
             _isRunning = true;
+            ActiveScene = new TitleMenuScene();
+            CurrentMap = new Map("MainTown"); // Temporaire : récupérer la map en sauvegarde bdd
 
             while (_isRunning)
             {
@@ -40,7 +42,7 @@ namespace RPG
             }
         }
 
-        public void EndGame()
+        public void EndGame() // I love you over 3000
         {
             _isRunning = false;
         }

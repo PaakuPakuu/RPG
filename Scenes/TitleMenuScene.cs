@@ -19,6 +19,7 @@ namespace RPG
             _testsMenu = new ContextualMenu(centered: true, padding: 2, selectedStyle: ContextualMenu.SelectedStyle.Green);
             _testsMenu.AddMenuItem("Menus", LaunchMenuTestScene);
             _testsMenu.AddMenuItem("Map", LaunchMapTestScene);
+            _testsMenu.AddMenuItem("Combat", LaunchFightTestScene);
         }
 
         public override void ExecuteScene()
@@ -58,6 +59,8 @@ namespace RPG
         private void LaunchMenuTestScene() => Game.ActiveScene = new MenuTestScene();
 
         private void LaunchMapTestScene() => Game.ActiveScene = new MapTestScene();
+
+        private void LaunchFightTestScene() => Game.ActiveScene = new CombatScene(new Player("Paku"), new Ennemy("Sukai"), new Ennemy("Gros Guc'"), new Ennemy("IovaSan"));
 
         #endregion
         #endregion

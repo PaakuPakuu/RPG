@@ -1,7 +1,9 @@
 ﻿namespace RPG
 {
-    public abstract class Item
+    public class Item
     {
+        public int Id { get; set; }
+
         public string Name
         {
             get => Name;
@@ -33,6 +35,9 @@
             Sprite = sprite;
         }
 
-        public abstract bool Apply(Combatant target);
+        public virtual bool Apply(Combatant target)
+        {
+            return true;
+        }
     }
 }

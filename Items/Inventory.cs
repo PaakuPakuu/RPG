@@ -4,11 +4,18 @@ namespace RPG
 {
     public class Inventory
     {
-        private readonly List<Item> _items;
+        public List<Item> Items { get; }
+
+        public int Id { get; set; }
+
+        public Inventory()
+        {
+            Items = new List<Item>();
+        }
 
         public Inventory(int columns, int rows)
         {
-            _items = new List<Item>(rows * columns);
+            Items = new List<Item>(rows * columns);
         }
     }
 }

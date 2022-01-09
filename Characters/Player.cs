@@ -28,16 +28,6 @@ namespace RPG
             Position = Game.CurrentMap.SpawnPosition;
         }
 
-        public void Die()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void TakeDamages(int amount)
-        {
-            throw new NotImplementedException();
-        }
-
         public PlayerAction WaitForAction()
         {
             bool validInput = false;
