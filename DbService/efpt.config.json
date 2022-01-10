@@ -1,0 +1,74 @@
+﻿{
+   "CodeGenerationMode": 0,
+   "ContextClassName": "Rpg_Jh_LocalContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": null,
+   "OutputPath": "Models",
+   "ProjectRootNamespace": "DbService",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 0,
+   "Tables": [
+      {
+         "Name": "boutique",
+         "ObjectType": 0
+      },
+      {
+         "Name": "donjon",
+         "ObjectType": 0
+      },
+      {
+         "Name": "groupe_monstre",
+         "ObjectType": 0
+      },
+      {
+         "Name": "inventaire",
+         "ObjectType": 0
+      },
+      {
+         "Name": "item",
+         "ObjectType": 0
+      },
+      {
+         "Name": "joueur",
+         "ObjectType": 0
+      },
+      {
+         "Name": "monstre",
+         "ObjectType": 0
+      },
+      {
+         "Name": "race_monstre",
+         "ObjectType": 0
+      },
+      {
+         "Name": "race_personnage",
+         "ObjectType": 0
+      },
+      {
+         "Name": "type_item",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": ".rpg_jh_local",
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDbContextSplitting": false,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseInflector": false,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": false,
+   "UseNoConstructor": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UseSchemaFolders": false,
+   "UseSpatial": false
+}
