@@ -4,7 +4,7 @@ using System.Text;
 
 namespace RPG
 {
-    public class CharacterCreationTestScene : Scene
+    public class CharacterCreationTestScene : DefaultScene
     {
     }
 }

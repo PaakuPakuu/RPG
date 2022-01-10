@@ -25,7 +25,6 @@
   <ItemGroup>
     <ProjectReference Include="..\ConsoleUtils\ConsoleUtils.csproj" />
     <ProjectReference Include="..\DbService\DbService.csproj" />
-    <ProjectReference Include="..\GeneralUtils\GeneralUtils.csproj" />
   </ItemGroup>
 
 </Project>

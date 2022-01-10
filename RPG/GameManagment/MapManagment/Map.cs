@@ -13,8 +13,8 @@ namespace RPG
         private readonly ITriggerable[,] _triggerables;
         private readonly List<IDrawable> _drawables;
 
-        private int _width;
-        private int _height;
+        private readonly int _width;
+        private readonly int _height;
 
         public int Width { get => _width; }
         public int Height { get => _height; }

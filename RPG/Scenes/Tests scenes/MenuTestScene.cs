@@ -4,7 +4,7 @@ using System.Text;
 
 namespace RPG
 {
-    public class MenuTestScene : Scene
+    public class MenuTestScene : DefaultScene
     {
         private ContextualMenu _cm;
         private bool _goToTitleMenu;

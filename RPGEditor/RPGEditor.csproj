@@ -10,10 +10,4 @@
     <ProjectReference Include="..\DbService\DbService.csproj" />
   </ItemGroup>
 
-  <!--<ItemGroup>
-    <Content Include="..\RPG\Resources\UI\*.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>-->
-
 </Project>

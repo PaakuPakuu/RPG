@@ -2,7 +2,7 @@
 
 namespace RPG
 {
-    public class SettingsScene : Scene
+    public class SettingsScene : DefaultScene
     {
         
     }

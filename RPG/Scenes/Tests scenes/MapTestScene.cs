@@ -4,12 +4,12 @@ using System.Text;
 
 namespace RPG
 {
-    public sealed class MapTestScene : Scene
+    public sealed class MapTestScene : DefaultScene
     {
-        private Player _player;
+        private readonly Player _player;
 
         private bool _changeScene;
-        private ContextualMenu _pauseMenu;
+        private readonly ContextualMenu _pauseMenu;
 
         public MapTestScene()
         {

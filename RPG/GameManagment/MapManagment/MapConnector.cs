@@ -8,9 +8,9 @@ namespace RPG
     {
         private static readonly string[] SPRITES = { "⍐", "⍈", "⍗", "⍇" };
 
-        private ContextualMenu _changeMapMenu;
-        private Direction _direction;
-        private Map _target;
+        private readonly ContextualMenu _changeMapMenu;
+        private readonly Direction _direction;
+        private readonly Map _target;
 
         public Point Position { get; }
         public bool Activable => true;

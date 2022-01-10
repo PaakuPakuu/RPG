@@ -2,7 +2,7 @@
 
 namespace RPG
 {
-    public class CreditsScene : Scene
+    public class CreditsScene : DefaultScene
     {
 
     }

@@ -2,7 +2,7 @@
 
 namespace RPG
 {
-    public sealed class TitleMenuScene : Scene
+    public sealed class TitleMenuScene : DefaultScene
     {
         private readonly ContextualMenu _titleMenu;
         private readonly ContextualMenu _testsMenu;
