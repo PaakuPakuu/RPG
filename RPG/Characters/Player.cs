@@ -5,6 +5,13 @@ namespace RPG
     public class Player : Combatant, IMovable2D, IDrawable
     {
         private readonly char[] _sprites = new char[] { '⇑', '⇒', '⇓', '⇐' };
+        private readonly Point[] _moveVectors = new Point[]
+            {
+                new Point(0, -1),
+                new Point(1, 0),
+                new Point(0, 1),
+                new Point(-1, 0)
+            };
 
         public Direction LookingAt { get; private set; }
         public Point PreviousPosition { get; private set; }
@@ -27,6 +34,8 @@ namespace RPG
             PreviousPosition = new Point();
             Position = Game.CurrentMap.SpawnPosition;
         }
+
+        private bool IsIntoMap(Point point) => point.X >= 0 && point.X < Game.CurrentMap.Width && point.Y >= 0 && point.Y < Game.CurrentMap.Height;
 
         public PlayerAction WaitForAction()
         {
@@ -60,51 +69,21 @@ namespace RPG
         public bool Move(Direction direction)
         {
             bool hasRotated = (direction != LookingAt);
+            bool hasMoved = false;
+            Point nextPosition = Position + _moveVectors[(int)direction];
 
             LookingAt = direction;
             PreviousPosition.X = Position.X;
             PreviousPosition.Y = Position.Y;
 
-            switch (direction)
+            if (Game.CurrentMap.IsWalkable(nextPosition) && IsIntoMap(nextPosition))
             {
-                case Direction.Top:
-                    if (Position.Y <= 0)
-                    {
-                        return hasRotated;
-                    }
-
-                    Position.Y--;
-                    break;
-
-                case Direction.Right:
-                    if (Position.X >= Game.CurrentMap.Width - 1)
-                    {
-                        return hasRotated;
-                    }
-
-                    Position.X++;
-                    break;
-
-                case Direction.Bottom:
-                    if (Position.Y >= Game.CurrentMap.Height - 1)
-                    {
-                        return hasRotated;
-                    }
-
-                    Position.Y++;
-                    break;
-
-                case Direction.Left:
-                    if (Position.X <= 0)
-                    {
-                        return hasRotated;
-                    }
-
-                    Position.X--;
-                    break;
+                Position.X = nextPosition.X;
+                Position.Y = nextPosition.Y;
+                hasMoved = true;
             }
 
-            return true;
+            return hasRotated || hasMoved;
         }
 
         public void Draw()

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace RPG
 {
@@ -83,6 +85,8 @@ namespace RPG
 
         public static readonly int WindowWidth = 80;
         public static readonly int WindowHeight = 35;
+        public static readonly int EditorWindowWidth = 100;
+        public static readonly int EditorWindowHeight = 40;
         //public static readonly Point WindowCenter = new Point(WindowSize.X / 2, WindowSize.Y / 2);
         public static readonly int WidthMargin = 4;
         public static readonly int HeightMargin = 2;
@@ -91,9 +95,29 @@ namespace RPG
         public static readonly List<ConsoleKey> VerticalMenuKeys = new List<ConsoleKey>() { ConsoleKey.UpArrow, ConsoleKey.DownArrow };
         public static readonly List<ConsoleKey> HorizontalMenuKeys = new List<ConsoleKey>() { ConsoleKey.LeftArrow, ConsoleKey.RightArrow };
 
-        public static void InitializeWindow()
+        public enum BorderStyle
         {
-            Console.OutputEncoding = System.Text.Encoding.UTF8;
+            Simple,
+            SimpleHeavy,
+            SimpleCurved,
+            Double,
+            Dashed,
+            DashedHeavy
+        }
+
+        private static readonly string[] _borderSets = new string[]
+            {
+                "─│┐┘└┌",
+                "━┃┓┛┗┏",
+                "─│╮╯╰╭",
+                "═║╗╝╚╔",
+                "╌╎┐┘└┌",
+                "╍╏┓┛┗┏"
+            };
+
+        public static void InitializeGameWindow()
+        {
+            Console.OutputEncoding = Encoding.UTF8;
             SetConsoleFont(FONT_NAME);
             DisableResizeCloseConsoleMenus();
 
@@ -102,6 +126,20 @@ namespace RPG
             Console.SetBufferSize(WindowWidth, WindowHeight);
             Console.CursorVisible = false;
         }
+
+        public static void InitializeEditorWindow()
+        {
+            Console.OutputEncoding = Encoding.UTF8;
+            SetConsoleFont(FONT_NAME);
+            DisableResizeCloseConsoleMenus();
+
+            Console.Title = "RPG Editor";
+            Console.SetWindowSize(EditorWindowWidth, EditorWindowHeight);
+            Console.SetBufferSize(EditorWindowWidth, EditorWindowHeight);
+            Console.CursorVisible = false;
+        }
+
+        #region Write on console methods
 
         public static void WriteInBufferAt(string[] display, int x, int y)
         {
@@ -114,25 +152,69 @@ namespace RPG
 
         public static void WriteInBufferAt(string display, int x, int y)
         {
-            List<string> splittedDisplay = new List<string>(display.Split('\n'));
-            WriteInBufferAt(splittedDisplay.ToArray(), x, y);
+            WriteInBufferAt(display.Split('\n'), x, y);
         }
 
         public static void WriteInWindowAt(string[] display, int x, int y)
         {
-            x = (x == -1 ? (WindowWidth - display.Length) / 2 : x);
-            y = (y == -1 ? WindowHeight / 2 : y);
-
             WriteInBufferAt(display, Console.WindowLeft + x, Console.WindowTop + y);
         }
 
-        public static void WriteInWindowAt(string display, int x = -1, int y = -1)
+        public static void WriteInWindowAt(string display, int x, int y)
         {
-            x = (x == -1 ? (WindowWidth - display.Length) / 2 : x);
-            y = (y == -1 ? WindowHeight / 2 : y);
 
             WriteInBufferAt(display, Console.WindowLeft + x, Console.WindowTop + y);
         }
+
+        public static void WriteInWindowCenter(string[] display)
+        {
+            int x = (WindowWidth - display.Max(l => l.Length)) / 2;
+            int y = (WindowHeight - display.Length) / 2;
+
+            WriteInBufferAt(display, x, y);
+        }
+
+        public static void WriteInWindowCenter(string display)
+        {
+            WriteInWindowCenter(display.Split('\n'));
+        }
+
+        #endregion
+
+        public static void PrintBox(int x, int y, int width, int height, BorderStyle borderStyle)
+        {
+            string borderSet = _borderSets[(int)borderStyle];
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append(borderSet[0], width).AppendLine();
+            for (int i = 1; i < height - 1; i++)
+            {
+                sb.Append(borderSet[1]).Append(' ', width - 2).Append($"{borderSet[1]}\n");
+            }
+            sb.Append(borderSet[0], width);
+
+            // Vertices
+            sb[0] = borderSet[5];
+            sb[width - 1] = borderSet[2];
+            sb[((width + 1) * (height - 1)) + 1] = borderSet[4];
+            sb[((width + 1) * height) - 1] = borderSet[3];
+            
+            WriteInWindowAt(sb.ToString(), x, y);
+        }
+
+        public static void ClearBox(int x, int y, int width, int height)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            for (int i = 0; i < height; i++)
+            {
+                sb.Append(' ', width).AppendLine();
+            }
+
+            WriteInWindowAt(sb.ToString(), x, y);
+        }
+
+        #region Console menus changes methods
 
         /// <summary>
         /// Disable resizing and closing actions on console.
@@ -184,5 +266,7 @@ namespace RPG
                 }
             }
         }
+
+        #endregion
     }
 }

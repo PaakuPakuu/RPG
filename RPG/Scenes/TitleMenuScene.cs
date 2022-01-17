@@ -20,6 +20,7 @@ namespace RPG
             _testsMenu.AddMenuItem("Menus", LaunchMenuTestScene);
             _testsMenu.AddMenuItem("Map", LaunchMapTestScene);
             _testsMenu.AddMenuItem("Combat", LaunchFightTestScene);
+            _testsMenu.AddMenuItem("Lancé de dés", LaunchDiceAnimationTestScene);
         }
 
         public override void ExecuteScene()
@@ -51,7 +52,7 @@ namespace RPG
 
         private void LaunchCreditsScene() => Game.ActiveScene = new CreditsScene();
 
-        private void EndGame() => Game.GameInstance.EndGame();
+        private void EndGame() => Game.EndGame();
 
         #endregion
         #region Tests menu actions
@@ -61,6 +62,8 @@ namespace RPG
         private void LaunchMapTestScene() => Game.ActiveScene = new MapTestScene();
 
         private void LaunchFightTestScene() => Game.ActiveScene = new CombatScene(new Player("Paku"), new Ennemy("Sukai"), new Ennemy("Gros Guc'"), new Ennemy("IovaSan"));
+
+        private void LaunchDiceAnimationTestScene() => Game.ActiveScene = new DiceAnimationTest();
 
         #endregion
         #endregion

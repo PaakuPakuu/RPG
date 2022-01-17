@@ -13,7 +13,7 @@ namespace RPG
 
         public MapTestScene()
         {
-            Game.CurrentMap = new Map("MainTown");
+            Game.CurrentMap = new Map("map_test");
 
             _player = new Player("player");
 

@@ -2,8 +2,6 @@
 {
     public abstract class Scene
     {
-        private readonly ContextualMenu _defaultCM;
-
         public int ScreenWidth { get; }
         public int ScreenHeight { get; }
 

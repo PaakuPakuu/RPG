@@ -10,6 +10,8 @@ namespace RPG
         private const string MAPS_PATH = "Resources/Maps";
         private const string DEFAULT_MAP_PATH = MAPS_PATH + "/DefaultMap.map";
 
+        private const char WALL = '█';
+
         private readonly ITriggerable[,] _triggerables;
         private readonly List<IDrawable> _drawables;
 
@@ -82,6 +84,11 @@ namespace RPG
             {
                 d.Draw();
             }
+        }
+
+        public bool IsWalkable(Point position)
+        {
+            return MapDisplay[position.Y][position.X] != WALL;
         }
     }
 }

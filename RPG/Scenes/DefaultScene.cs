@@ -14,7 +14,7 @@
 
         public override void ExecuteScene()
         {
-            DisplayTools.WriteInWindowAt("Cette scène est vide");
+            DisplayTools.WriteInWindowCenter("Cette scène est vide");
             _defaultCM.Execute();
         }
     }

@@ -14,19 +14,10 @@ namespace RPG
         private readonly bool _centeredOnWindowWidth;
         private readonly bool _centeredOnWindowHeight;
         private readonly int _padding;
-        private readonly BorderStyle _borderStyle;
+        private readonly DisplayTools.BorderStyle _borderStyle;
         private readonly SelectedStyle _selectedStyle;
         private readonly List<MenuItem> _optionList;
 
-        private readonly string[] _borderSets = new string[]
-            {
-                "─│┐┘└┌",
-                "━┃┓┛┗┏",
-                "─│╮╯╰╭",
-                "═║╗╝╚╔",
-                "╌╎┐┘└┌",
-                "╍╏┓┛┗┏"
-            };
         private readonly string[][] _selectionSets = new string[][]
             {
                 new string[2] { ">", "" },
@@ -41,17 +32,7 @@ namespace RPG
 
         private int _maxMenuItemLength;
 
-        public enum BorderStyle
-        {
-            None,
-            Simple,
-            SimpleHeavy,
-            SimpleCurved,
-            Double,
-            Dashed,
-            DashedHeavy
-        }
-
+        
         public enum SelectedStyle
         {
             Arrow,
@@ -65,23 +46,22 @@ namespace RPG
         }
 
         public ContextualMenu(int x = -1, int y = -1, bool horizontal = false, bool centered = false, int padding = 0,
-            BorderStyle borderStyle = BorderStyle.None, SelectedStyle selectedStyle = SelectedStyle.Reversed)
+        SelectedStyle selectedStyle = SelectedStyle.Reversed)
         {
             _horizontalDisplay = horizontal;
             _optionList = new List<MenuItem>();
             _position = new Point(x, y);
             _centeredText = centered && !horizontal;
-            _borderStyle = borderStyle;
             _selectedStyle = selectedStyle;
             _padding = padding + 1;
             _maxMenuItemLength = 0;
             _centeredOnWindowWidth = (x == -1);
             _centeredOnWindowHeight = (y == -1);
 
-            if (_borderSets.Length != Enum.GetValues(borderStyle.GetType()).Length - 1)
-            {
-                throw new Exception("The border sets number must be equal to border style number.");
-            }
+            //if (_borderSets.Length != Enum.GetValues(borderStyle.GetType()).Length - 1)
+            //{
+            //    throw new Exception("The border sets number must be equal to border style number.");
+            //}
 
             if (_selectionSets.Length != Enum.GetValues(selectedStyle.GetType()).Length)
             {
