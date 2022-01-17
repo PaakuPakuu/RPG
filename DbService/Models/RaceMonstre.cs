@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace DbService.Models
+namespace DbService
 {
     public partial class RaceMonstre
     {

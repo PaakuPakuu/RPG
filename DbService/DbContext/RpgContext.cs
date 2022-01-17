@@ -6,28 +6,30 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
-namespace DbService.Models
+namespace DbService
 {
-    public partial class Rpg_Jh_LocalContext : DbContext
+    public partial class RpgContext : DbContext
     {
-        public Rpg_Jh_LocalContext()
+        public RpgContext()
         {
         }
 
-        public Rpg_Jh_LocalContext(DbContextOptions<Rpg_Jh_LocalContext> options)
+        public RpgContext(DbContextOptions<RpgContext> options)
             : base(options)
         {
         }
 
         public virtual DbSet<Boutique> Boutique { get; set; }
-        public virtual DbSet<Donjon> Donjon { get; set; }
         public virtual DbSet<GroupeMonstre> GroupeMonstre { get; set; }
         public virtual DbSet<Inventaire> Inventaire { get; set; }
         public virtual DbSet<Item> Item { get; set; }
         public virtual DbSet<Joueur> Joueur { get; set; }
+        public virtual DbSet<Map> Map { get; set; }
+        public virtual DbSet<Metier> Metier { get; set; }
         public virtual DbSet<Monstre> Monstre { get; set; }
+        public virtual DbSet<Origine> Origine { get; set; }
         public virtual DbSet<RaceMonstre> RaceMonstre { get; set; }
-        public virtual DbSet<RacePersonnage> RacePersonnage { get; set; }
+        public virtual DbSet<Sauvegarde> Sauvegarde { get; set; }
         public virtual DbSet<TypeItem> TypeItem { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -50,18 +52,6 @@ namespace DbService.Models
                     .HasColumnName("nom");
             });
 
-            modelBuilder.Entity<Donjon>(entity =>
-            {
-                entity.HasKey(e => e.IdDonjon)
-                    .HasName("PRIMARY");
-
-                entity.ToTable("donjon");
-
-                entity.Property(e => e.IdDonjon).HasColumnName("id_donjon");
-
-                entity.Property(e => e.Recompense).HasColumnName("recompense");
-            });
-
             modelBuilder.Entity<GroupeMonstre>(entity =>
             {
                 entity.HasKey(e => e.IdGroupeMonstre)
@@ -69,17 +59,19 @@ namespace DbService.Models
 
                 entity.ToTable("groupe_monstre");
 
-                entity.HasIndex(e => e.IdDonjon, "groupe_monstre_donjon_idx");
+                entity.HasIndex(e => e.IdMap, "groupe_monstre_map_idx");
 
                 entity.Property(e => e.IdGroupeMonstre).HasColumnName("id_groupe_monstre");
 
-                entity.Property(e => e.IdDonjon).HasColumnName("id_donjon");
+                entity.Property(e => e.EstBattu).HasColumnName("est_battu");
 
-                entity.HasOne(d => d.IdDonjonNavigation)
+                entity.Property(e => e.IdMap).HasColumnName("id_map");
+
+                entity.HasOne(d => d.IdMapNavigation)
                     .WithMany(p => p.GroupeMonstre)
-                    .HasForeignKey(d => d.IdDonjon)
+                    .HasForeignKey(d => d.IdMap)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("groupe_monstre_donjon");
+                    .HasConstraintName("groupe_monstre_map");
             });
 
             modelBuilder.Entity<Inventaire>(entity =>
@@ -96,6 +88,11 @@ namespace DbService.Models
                 entity.Property(e => e.IdBoutique).HasColumnName("id_boutique");
 
                 entity.Property(e => e.Slots).HasColumnName("slots");
+
+                entity.Property(e => e.Titre)
+                    .IsRequired()
+                    .HasMaxLength(32)
+                    .HasColumnName("titre");
 
                 entity.HasOne(d => d.IdBoutiqueNavigation)
                     .WithMany(p => p.Inventaire)
@@ -194,6 +191,40 @@ namespace DbService.Models
                     .HasConstraintName("joueur_race");
             });
 
+            modelBuilder.Entity<Map>(entity =>
+            {
+                entity.HasKey(e => e.IdMap)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("map");
+
+                entity.Property(e => e.IdMap).HasColumnName("id_map");
+
+                entity.Property(e => e.Nom)
+                    .IsRequired()
+                    .HasMaxLength(32)
+                    .HasColumnName("nom");
+
+                entity.Property(e => e.PositionSpawnX).HasColumnName("position_spawn_x");
+
+                entity.Property(e => e.PositionSpawnY).HasColumnName("position_spawn_y");
+
+                entity.Property(e => e.Url)
+                    .IsRequired()
+                    .HasMaxLength(128)
+                    .HasColumnName("url");
+            });
+
+            modelBuilder.Entity<Metier>(entity =>
+            {
+                entity.HasKey(e => e.IdMetier)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("metier");
+
+                entity.Property(e => e.IdMetier).HasColumnName("id_metier");
+            });
+
             modelBuilder.Entity<Monstre>(entity =>
             {
                 entity.HasKey(e => e.IdMonstre)
@@ -224,6 +255,41 @@ namespace DbService.Models
                     .HasConstraintName("monstre_race");
             });
 
+            modelBuilder.Entity<Origine>(entity =>
+            {
+                entity.HasKey(e => e.IdOrigine)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("origine");
+
+                entity.Property(e => e.IdOrigine).HasColumnName("id_origine");
+
+                entity.Property(e => e.AdresseMax).HasColumnName("adresse_max");
+
+                entity.Property(e => e.AdresseMin).HasColumnName("adresse_min");
+
+                entity.Property(e => e.CharismeMax).HasColumnName("charisme_max");
+
+                entity.Property(e => e.CharismeMin).HasColumnName("charisme_min");
+
+                entity.Property(e => e.CourageMax).HasColumnName("courage_max");
+
+                entity.Property(e => e.CourageMin).HasColumnName("courage_min");
+
+                entity.Property(e => e.ForceMax).HasColumnName("force_max");
+
+                entity.Property(e => e.ForceMin).HasColumnName("force_min");
+
+                entity.Property(e => e.IntelligenceMax).HasColumnName("intelligence_max");
+
+                entity.Property(e => e.IntelligenceMin).HasColumnName("intelligence_min");
+
+                entity.Property(e => e.Nom)
+                    .IsRequired()
+                    .HasMaxLength(16)
+                    .HasColumnName("nom");
+            });
+
             modelBuilder.Entity<RaceMonstre>(entity =>
             {
                 entity.HasKey(e => e.IdRaceMonstre)
@@ -239,19 +305,34 @@ namespace DbService.Models
                     .HasColumnName("nom");
             });
 
-            modelBuilder.Entity<RacePersonnage>(entity =>
+            modelBuilder.Entity<Sauvegarde>(entity =>
             {
-                entity.HasKey(e => e.IdRacePersonnage)
+                entity.HasKey(e => e.IdSauvegarde)
                     .HasName("PRIMARY");
 
-                entity.ToTable("race_personnage");
+                entity.ToTable("sauvegarde");
 
-                entity.Property(e => e.IdRacePersonnage).HasColumnName("id_race_personnage");
+                entity.HasIndex(e => e.IdJoueur, "sauvegarde_joueur_idx");
 
-                entity.Property(e => e.Nom)
-                    .IsRequired()
-                    .HasMaxLength(16)
-                    .HasColumnName("nom");
+                entity.HasIndex(e => e.IdMapCourante, "sauvegarde_map_idx");
+
+                entity.Property(e => e.IdSauvegarde).HasColumnName("id_sauvegarde");
+
+                entity.Property(e => e.IdJoueur).HasColumnName("id_joueur");
+
+                entity.Property(e => e.IdMapCourante).HasColumnName("id_map_courante");
+
+                entity.HasOne(d => d.IdJoueurNavigation)
+                    .WithMany(p => p.Sauvegarde)
+                    .HasForeignKey(d => d.IdJoueur)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("sauvegarde_joueur");
+
+                entity.HasOne(d => d.IdMapCouranteNavigation)
+                    .WithMany(p => p.Sauvegarde)
+                    .HasForeignKey(d => d.IdMapCourante)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("sauvegarde_map");
             });
 
             modelBuilder.Entity<TypeItem>(entity =>

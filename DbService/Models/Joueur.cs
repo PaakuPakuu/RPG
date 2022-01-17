@@ -3,10 +3,15 @@
 using System;
 using System.Collections.Generic;
 
-namespace DbService.Models
+namespace DbService
 {
     public partial class Joueur
     {
+        public Joueur()
+        {
+            Sauvegarde = new HashSet<Sauvegarde>();
+        }
+
         public int IdJoueur { get; set; }
         public int IdRace { get; set; }
         public int IdInventaire { get; set; }
@@ -25,6 +30,7 @@ namespace DbService.Models
         public int Argent { get; set; }
 
         public virtual Inventaire IdInventaireNavigation { get; set; }
-        public virtual RacePersonnage IdRaceNavigation { get; set; }
+        public virtual Origine IdRaceNavigation { get; set; }
+        public virtual ICollection<Sauvegarde> Sauvegarde { get; set; }
     }
 }

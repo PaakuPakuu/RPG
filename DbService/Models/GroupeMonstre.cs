@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace DbService.Models
+namespace DbService
 {
     public partial class GroupeMonstre
     {
@@ -13,9 +13,10 @@ namespace DbService.Models
         }
 
         public int IdGroupeMonstre { get; set; }
-        public int IdDonjon { get; set; }
+        public int IdMap { get; set; }
+        public sbyte EstBattu { get; set; }
 
-        public virtual Donjon IdDonjonNavigation { get; set; }
+        public virtual Map IdMapNavigation { get; set; }
         public virtual ICollection<Monstre> Monstre { get; set; }
     }
 }

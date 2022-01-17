@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace DbService.Models
+namespace DbService
 {
     public partial class Inventaire
     {
@@ -16,6 +16,7 @@ namespace DbService.Models
         public int IdInventaire { get; set; }
         public int? IdBoutique { get; set; }
         public int Slots { get; set; }
+        public string Titre { get; set; }
 
         public virtual Boutique IdBoutiqueNavigation { get; set; }
         public virtual ICollection<Item> Item { get; set; }

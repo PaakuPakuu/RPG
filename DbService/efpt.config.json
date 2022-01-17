@@ -1,24 +1,20 @@
 ﻿{
    "CodeGenerationMode": 0,
-   "ContextClassName": "Rpg_Jh_LocalContext",
-   "ContextNamespace": null,
+   "ContextClassName": "RpgContext",
+   "ContextNamespace": "DbService",
    "DefaultDacpacSchema": null,
    "FilterSchemas": false,
    "IncludeConnectionString": false,
-   "ModelNamespace": null,
-   "OutputContextPath": null,
+   "ModelNamespace": "DbService",
+   "OutputContextPath": "DbContext",
    "OutputPath": "Models",
-   "ProjectRootNamespace": "DbService",
+   "ProjectRootNamespace": "",
    "Schemas": null,
    "SelectedHandlebarsLanguage": 0,
    "SelectedToBeGenerated": 0,
    "Tables": [
       {
          "Name": "boutique",
-         "ObjectType": 0
-      },
-      {
-         "Name": "donjon",
          "ObjectType": 0
       },
       {
@@ -38,7 +34,19 @@
          "ObjectType": 0
       },
       {
+         "Name": "map",
+         "ObjectType": 0
+      },
+      {
+         "Name": "metier",
+         "ObjectType": 0
+      },
+      {
          "Name": "monstre",
+         "ObjectType": 0
+      },
+      {
+         "Name": "origine",
          "ObjectType": 0
       },
       {
@@ -46,7 +54,7 @@
          "ObjectType": 0
       },
       {
-         "Name": "race_personnage",
+         "Name": "sauvegarde",
          "ObjectType": 0
       },
       {
