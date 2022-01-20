@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using GeneralUtils;
+using System;
 
 namespace RPG
 {
@@ -16,7 +15,6 @@ namespace RPG
         public bool Activable => true;
         public string Sprite => SPRITES[(int)_direction];
         public Map Origin { get; }
-
 
         public MapConnector(Map origin, Map target, Point position, Direction direction = Direction.Top)
         {

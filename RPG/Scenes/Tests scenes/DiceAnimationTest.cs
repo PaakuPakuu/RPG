@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using GeneralUtils;
 
 namespace RPG
 {
@@ -37,7 +35,7 @@ namespace RPG
 
         private void RollDice()
         {
-            _dice6.RunRollAnimation();
+            _dice6.RollWithAnimation(9, 5);
         }
 
         private void Leave()

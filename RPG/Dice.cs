@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using GeneralUtils;
+using System;
 using System.Threading;
 
 namespace RPG
@@ -23,28 +22,30 @@ namespace RPG
             _maxNumber = max;
         }
 
-        private int Roll()
+        public int Roll()
         {
             return _random.Next(1, _maxNumber + 1);
         }
 
-        public int RunRollAnimation()
+        public int RollWithAnimation(int x, int y)
         {
             int index = 0;
             int number;
+            int numberX = x + 3;
+            int numberY = y + 1;
 
-            DisplayTools.WriteInWindowCenter(_smallDiceModel);
+            DisplayTools.WriteInWindowCenter(_smallDiceModel, x, y);
 
             while (index < _beforeStop.Length)
             {
-                DisplayTools.WriteInWindowCenter(_beforeStop[index].ToString());
+                DisplayTools.WriteInWindowCenter(_beforeStop[index].ToString(), numberX, numberY);
 
                 index++;
                 Thread.Sleep(_animationInterval);
             }
 
             number = Roll();
-            DisplayTools.WriteInWindowCenter(number.ToString());
+            DisplayTools.WriteInWindowCenter(number.ToString(), numberX, numberY);
 
             return number;
         }

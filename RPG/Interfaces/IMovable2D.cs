@@ -1,4 +1,4 @@
-﻿using System;
+﻿using GeneralUtils;
 
 namespace RPG
 {

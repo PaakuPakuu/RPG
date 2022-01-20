@@ -4,7 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace RPG
+namespace GeneralUtils
 {
     public static class DisplayTools
     {
@@ -91,6 +91,10 @@ namespace RPG
         public static readonly int WidthMargin = 4;
         public static readonly int HeightMargin = 2;
 
+        private static readonly int TEXT_ANIMATION_INTERVAL = 10;
+        private static readonly int TEXT_ANIMATION_MAX_ROWS = 4;
+        private static readonly int TEXT_ANIMATION_MAX_WIDTH = (int)(WindowWidth * (3f / 4));
+
         public static readonly List<ConsoleKey> UniversalKeys = new List<ConsoleKey>() { ConsoleKey.Enter };
         public static readonly List<ConsoleKey> VerticalMenuKeys = new List<ConsoleKey>() { ConsoleKey.UpArrow, ConsoleKey.DownArrow };
         public static readonly List<ConsoleKey> HorizontalMenuKeys = new List<ConsoleKey>() { ConsoleKey.LeftArrow, ConsoleKey.RightArrow };
@@ -137,81 +141,6 @@ namespace RPG
             Console.SetWindowSize(EditorWindowWidth, EditorWindowHeight);
             Console.SetBufferSize(EditorWindowWidth, EditorWindowHeight);
             Console.CursorVisible = false;
-        }
-
-        #region Write on console methods
-
-        public static void WriteInBufferAt(string[] display, int x, int y)
-        {
-            for (int i = 0; i < display.Length; i++)
-            {
-                Console.SetCursorPosition(x, y + i);
-                Console.Write(display[i]);
-            }
-        }
-
-        public static void WriteInBufferAt(string display, int x, int y)
-        {
-            WriteInBufferAt(display.Split('\n'), x, y);
-        }
-
-        public static void WriteInWindowAt(string[] display, int x, int y)
-        {
-            WriteInBufferAt(display, Console.WindowLeft + x, Console.WindowTop + y);
-        }
-
-        public static void WriteInWindowAt(string display, int x, int y)
-        {
-
-            WriteInBufferAt(display, Console.WindowLeft + x, Console.WindowTop + y);
-        }
-
-        public static void WriteInWindowCenter(string[] display)
-        {
-            int x = (WindowWidth - display.Max(l => l.Length)) / 2;
-            int y = (WindowHeight - display.Length) / 2;
-
-            WriteInBufferAt(display, x, y);
-        }
-
-        public static void WriteInWindowCenter(string display)
-        {
-            WriteInWindowCenter(display.Split('\n'));
-        }
-
-        #endregion
-
-        public static void PrintBox(int x, int y, int width, int height, BorderStyle borderStyle)
-        {
-            string borderSet = _borderSets[(int)borderStyle];
-            StringBuilder sb = new StringBuilder();
-
-            sb.Append(borderSet[0], width).AppendLine();
-            for (int i = 1; i < height - 1; i++)
-            {
-                sb.Append(borderSet[1]).Append(' ', width - 2).Append($"{borderSet[1]}\n");
-            }
-            sb.Append(borderSet[0], width);
-
-            // Vertices
-            sb[0] = borderSet[5];
-            sb[width - 1] = borderSet[2];
-            sb[((width + 1) * (height - 1)) + 1] = borderSet[4];
-            sb[((width + 1) * height) - 1] = borderSet[3];
-            
-            WriteInWindowAt(sb.ToString(), x, y);
-        }
-
-        public static void ClearBox(int x, int y, int width, int height)
-        {
-            StringBuilder sb = new StringBuilder();
-
-            for (int i = 0; i < height; i++)
-            {
-                sb.Append(' ', width).AppendLine();
-            }
-
-            WriteInWindowAt(sb.ToString(), x, y);
         }
 
         #region Console menus changes methods
@@ -268,5 +197,173 @@ namespace RPG
         }
 
         #endregion
+
+        #region Write on console methods
+
+        #region Not animated
+
+        public static void WriteInBufferAt(string[] display, int x, int y, bool animated = false)
+        {
+            if (animated)
+            {
+                for (int i = 0; i < display.Length; i++)
+                {
+                    for (int j = 0; j < display[i].Length; j++)
+                    {
+                        Console.SetCursorPosition(x + j, y + i);
+                        Console.Write(display[i][j]);
+                        System.Threading.Thread.Sleep(TEXT_ANIMATION_INTERVAL);
+                    }
+                }
+            } else
+            {
+                for (int i = 0; i < display.Length; i++)
+                {
+                    Console.SetCursorPosition(x, y + i);
+                    Console.Write(display[i]);
+                }
+            }
+        }
+
+        public static void WriteInBufferAt(string display, int x, int y)
+        {
+            WriteInBufferAt(display.Split('\n'), x, y);
+        }
+
+        public static void WriteInWindowAt(string[] display, int x, int y)
+        {
+            WriteInBufferAt(display, Console.WindowLeft + x, Console.WindowTop + y);
+        }
+
+        public static void WriteInWindowAt(string display, int x, int y)
+        {
+            WriteInBufferAt(display, Console.WindowLeft + x, Console.WindowTop + y);
+        }
+
+        public static void WriteInWindowCenter(string[] display, int x = -1, int y = -1, bool animated = false)
+        {
+            int newX = (x == -1 ? (WindowWidth - display.Max(l => l.Length)) / 2 : x);
+            int newY = (y == -1 ? (WindowHeight - display.Length) / 2 : y);
+
+            WriteInBufferAt(display, newX, newY, animated);
+        }
+
+        public static void WriteInWindowCenter(string display, int x = -1, int y = -1, bool animated = false)
+        {
+            WriteInWindowCenter(display.Split('\n'), x, y, animated);
+        }
+
+        #endregion
+
+        #region Animated
+
+        private static string[] SplitByLength(string display, int maxLength)
+        {
+            List<string> splitted = new List<string>();
+
+            while (display.Length >= maxLength)
+            {
+                
+                splitted.Add(display.Substring(0, maxLength));
+                display = display[maxLength..];
+            }
+
+            if (!string.IsNullOrEmpty(display))
+            {
+                splitted.Add(display);
+            }
+
+            return splitted.ToArray();
+        }
+
+        private static string[] SplitByLength(string[] display)
+        {
+            List<string> splitted = new List<string>();
+
+            foreach (string line in display)
+            {
+                splitted.AddRange(SplitByLength(line, TEXT_ANIMATION_MAX_WIDTH));
+            }
+
+            return splitted.ToArray();
+        }
+
+        //private static string[] SplitByLengthAndLine(string display)
+        //{
+        //    string[] splitted = display.Split('\n');
+        //    List<string> allSplitted = new List<string>();
+
+        //    foreach (string sub in splitted)
+        //    {
+        //        allSplitted.AddRange(SplitByLength(sub));
+        //    }
+
+        //    return allSplitted.ToArray();
+        //}
+
+        public static void WriteInWindowAnimated(string[] display)
+        {
+            List<string> displayList = new List<string>(SplitByLength(display));
+            string[] lines;
+            int indexToDelete;
+            int positionY = WindowHeight - TEXT_ANIMATION_MAX_ROWS - 1;
+
+            PrintBox(-1, positionY - 1, TEXT_ANIMATION_MAX_WIDTH + 8, 6, BorderStyle.DashedHeavy);
+            Console.CursorVisible = true;
+
+            while (displayList.Count > 0)
+            {
+                indexToDelete = Math.Min(displayList.Count, TEXT_ANIMATION_MAX_ROWS);
+                lines = displayList.GetRange(0, indexToDelete).ToArray();
+                WriteInWindowCenter(lines, y: positionY, animated: true);
+                Console.ReadKey(true);
+                ClearBox(-1, positionY - 1, TEXT_ANIMATION_MAX_WIDTH + 8, TEXT_ANIMATION_MAX_ROWS);
+                displayList.RemoveRange(0, indexToDelete);
+            }
+
+            ClearBox(-1, positionY, TEXT_ANIMATION_MAX_WIDTH + 9, TEXT_ANIMATION_MAX_ROWS + 1);
+            Console.CursorVisible = false;
+        }
+
+        #endregion
+
+        #endregion
+
+        public static void PrintBox(int x, int y, int width, int height, BorderStyle borderStyle)
+        {
+            string borderSet = _borderSets[(int)borderStyle];
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append(borderSet[0], width).AppendLine();
+            for (int i = 1; i < height - 1; i++)
+            {
+                sb.Append(borderSet[1]).Append(' ', width - 2).Append($"{borderSet[1]}\n");
+            }
+            sb.Append(borderSet[0], width);
+
+            // Vertices
+            sb[0] = borderSet[5];
+            sb[width - 1] = borderSet[2];
+            sb[((width + 1) * (height - 1)) + 1] = borderSet[4];
+            sb[((width + 1) * height) - 1] = borderSet[3];
+            
+            WriteInWindowCenter(sb.ToString(), x, y);
+        }
+
+        public static void ClearBox(int x, int y, int width, int height)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            for (int i = 0; i < height; i++)
+            {
+                sb.Append(' ', width);
+                if (i != height - 1)
+                {
+                    sb.AppendLine();
+                }
+            }
+
+            WriteInWindowCenter(sb.ToString(), x, y);
+        }
     }
 }

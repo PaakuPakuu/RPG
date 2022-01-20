@@ -12,8 +12,4 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\GeneralUtils\GeneralUtils.csproj" />
-  </ItemGroup>
-
 </Project>

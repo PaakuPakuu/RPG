@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace RPG
+﻿namespace RPG
 {
     public interface IDrawable : ILocatable2D
     {

@@ -1,4 +1,4 @@
-﻿namespace RPG
+﻿namespace GeneralUtils
 {
     public abstract class Scene
     {

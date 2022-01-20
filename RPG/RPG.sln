@@ -9,9 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DbService", "..\DbService\D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RPGEditor", "..\RPGEditor\RPGEditor.csproj", "{2DE6F381-3E91-4729-A630-B646B99F9570}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleUtils", "..\ConsoleUtils\ConsoleUtils.csproj", "{0BCDC154-390C-497A-8307-8BD9D262AD9E}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeneralUtils", "..\GeneralUtils\GeneralUtils.csproj", "{88DB31BE-0CC7-4B30-AEC1-3EB6115F38CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeneralUtils", "..\ConsoleUtils\GeneralUtils.csproj", "{0BCDC154-390C-497A-8307-8BD9D262AD9E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +33,6 @@ Global
 		{0BCDC154-390C-497A-8307-8BD9D262AD9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0BCDC154-390C-497A-8307-8BD9D262AD9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0BCDC154-390C-497A-8307-8BD9D262AD9E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{88DB31BE-0CC7-4B30-AEC1-3EB6115F38CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{88DB31BE-0CC7-4B30-AEC1-3EB6115F38CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{88DB31BE-0CC7-4B30-AEC1-3EB6115F38CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{88DB31BE-0CC7-4B30-AEC1-3EB6115F38CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

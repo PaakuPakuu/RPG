@@ -1,7 +1,5 @@
-﻿using RPG;
+﻿using GeneralUtils;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace RPGEditor
 {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GeneralUtils;
+using System;
 
 namespace RPG
 {
@@ -9,8 +10,8 @@ namespace RPG
 
         public TitleMenuScene()
         {
-            _titleMenu = new ContextualMenu(centered: true, padding: 2, selectedStyle: ContextualMenu.SelectedStyle.DoubleArrow);
-            _titleMenu.AddMenuItem("Jouer", LaunchGameScene);
+            _titleMenu = new ContextualMenu(y: 20, centered: true, padding: 1, selectedStyle: ContextualMenu.SelectedStyle.DoubleArrow);
+            _titleMenu.AddMenuItem("Jouer", LaunchGameSavesScene);
             _titleMenu.AddMenuItem("Menu des tests", ShowTestsMenu);
             _titleMenu.AddMenuItem("Options", LaunchSettingsScene);
             _titleMenu.AddMenuItem("Crédits", LaunchCreditsScene);
@@ -27,20 +28,30 @@ namespace RPG
         {
             Console.SetBufferSize(ScreenWidth, ScreenHeight);
 
-            DisplayTools.WriteInWindowAt(
-@"█ Bordures de map
-⍈⍇⍐⍗ Map connectors
-░ Chemins pavés
-▲ Fiole pleine
-△ Fiole vide"
-            , 4, 2);
+            //            DisplayTools.WriteInWindowAt(
+            //@"█ Bordures de map
+            //⍈⍇⍐⍗ Map connectors
+            //░ Chemins pavés
+            //▲ Fiole pleine
+            //△ Fiole vide"
+            //, 4, 2);
+            DisplayTools.WriteInWindowCenter(@"              />
+             / <
+O[\\\\\\\\\(O):::<=============================================-
+             \ <
+              \>", y: 4);
+            DisplayTools.PrintBox(-1, 11, ScreenWidth - 13, 3, DisplayTools.BorderStyle.SimpleHeavy);
+            DisplayTools.WriteInWindowCenter(@"__  __  ___  __  __  ____ __ __ __    ____  _____ __ __ __
+||\ || // \\ ||  || ||    || || ||    || )) ||    || || || //
+||\\|| ||=|| ||==|| ||==  || || ||    ||=)  ||==  || || ||<< 
+|| \|| || || ||  || ||___ \\_// ||__| ||_)) ||___ \\_// || \\", y: 9);
             _titleMenu.Execute();
         }
 
         #region Actions
         #region Title menu actions
 
-        private void LaunchGameScene() => Game.ActiveScene = new GameScene();
+        private void LaunchGameSavesScene() => Game.ActiveScene = new GameSavesScene();
 
         private void ShowTestsMenu()
         {

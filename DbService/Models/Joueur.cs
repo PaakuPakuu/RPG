@@ -7,14 +7,10 @@ namespace DbService
 {
     public partial class Joueur
     {
-        public Joueur()
-        {
-            Sauvegarde = new HashSet<Sauvegarde>();
-        }
-
         public int IdJoueur { get; set; }
         public int IdRace { get; set; }
-        public int IdInventaire { get; set; }
+        public int? IdInventaire { get; set; }
+        public int IdMapCourante { get; set; }
         public string Nom { get; set; }
         public int Experience { get; set; }
         public int Niveau { get; set; }
@@ -28,9 +24,11 @@ namespace DbService
         public int ManqueDeBol { get; set; }
         public int Or { get; set; }
         public int Argent { get; set; }
+        public int PointsVie { get; set; }
+        public int EnergieAstrale { get; set; }
 
         public virtual Inventaire IdInventaireNavigation { get; set; }
+        public virtual Map IdMapCouranteNavigation { get; set; }
         public virtual Origine IdRaceNavigation { get; set; }
-        public virtual ICollection<Sauvegarde> Sauvegarde { get; set; }
     }
 }

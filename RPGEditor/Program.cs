@@ -1,12 +1,8 @@
-﻿using System;
-using System.IO;
-using System.Text;
-
-namespace RPGEditor
+﻿namespace RPGEditor
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             Editor.EditorInstance.RunEditor();
         }

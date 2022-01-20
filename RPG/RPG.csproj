@@ -23,7 +23,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ConsoleUtils\ConsoleUtils.csproj" />
+    <None Remove="Resources\UI\criterias_creation_template.txt" />
+    <None Remove="Resources\UI\save_template.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ConsoleUtils\GeneralUtils.csproj" />
     <ProjectReference Include="..\DbService\DbService.csproj" />
   </ItemGroup>
 

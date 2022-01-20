@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GeneralUtils;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,8 +8,7 @@ namespace RPG
 {
     public class Map
     {
-        private const string MAPS_PATH = "Resources/Maps";
-        private const string DEFAULT_MAP_PATH = MAPS_PATH + "/DefaultMap.map";
+        private const string DEFAULT_MAP_PATH = ResourcesUtils.MAPS_PATH + "/DefaultMap.map";
 
         private const char WALL = '█';
 
@@ -29,7 +29,7 @@ namespace RPG
             // Get ascii display from .map file
             try
             {
-                MapDisplay = File.ReadAllLines($"{MAPS_PATH}/{fileName}.map");
+                MapDisplay = ResourcesUtils.GetTemplate($"{ResourcesUtils.MAPS_PATH}/{fileName}.map");
             }
             catch
             {

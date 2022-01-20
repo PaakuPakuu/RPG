@@ -1,17 +1,13 @@
-﻿using ConsoleUtils;
-using DbService;
-using RPG;
+﻿using DbService;
+using GeneralUtils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace RPGEditor
 {
     public class OriginsScene : Scene
     {
-        private readonly string[] _criterias = new string[] { "COU", "INT", "CHA", "ADR", "FOR" };
-
         #region Box positioning values
 
         private static readonly Point ORIGINS_BOX_POS = new Point(1, 1);
@@ -26,9 +22,6 @@ namespace RPGEditor
         private static readonly Point INPUT_POS = INPUT_BOX_POS + new Point(7, 1);
 
         #endregion
-
-        private static readonly int MIN_CRITERIA = 8;
-        private static readonly int MAX_CRITERIA = 13;
 
         private static readonly string VALID_CRITERIA_M = "La valeur de {0} de {1} a été mise à jour avec succès.";
 
@@ -51,7 +44,7 @@ namespace RPGEditor
 
             _criteriasMenu = new ContextualMenu(x: TABLE_BOX_POS.X + 4, y: TABLE_BOX_POS.Y + TABLE_BOX_SIZE.Y - 3, padding: 2, horizontal: true);
             _criteriasMenu.AddMenuItem("Retour", ExecuteOriginsMenu);
-            foreach (string crit in _criterias)
+            foreach (string crit in GameRules.CRITERIAS)
             {
                 _criteriasMenu.AddMenuItem(crit, () =>
                 {
@@ -81,7 +74,7 @@ namespace RPGEditor
         private void AskCriteria(bool isMin, int minCriteria, out int value, out string message)
         {
             DisplayTools.WriteInWindowAt((isMin ? "Min : " : "Max : "), INPUT_BOX_POS.X + 1, INPUT_BOX_POS.Y + 1);
-            while (!UserInputUtils.GetNumberInOrZero(minCriteria, MAX_CRITERIA, out value, out message))
+            while (!UserInputUtils.GetNumberInOrZero(minCriteria, GameRules.MAX_CRITERIA, out value, out message))
             {
                 PrintMessageBox(message);
                 ResetInput();
@@ -135,13 +128,13 @@ namespace RPGEditor
             DisplayTools.PrintBox(INPUT_BOX_POS.X, INPUT_BOX_POS.Y, INPUT_BOX_SIZE.X, INPUT_BOX_SIZE.Y, DisplayTools.BorderStyle.SimpleCurved);
 
             Console.CursorVisible = true;
-            AskCriteria(true, MIN_CRITERIA, out int min, out string message);
+            AskCriteria(true, GameRules.MIN_CRITERIA, out int min, out string message);
 
             DisplayTools.ClearBox(MESSAGE_BOX_POS.X, MESSAGE_BOX_POS.Y, MESSAGE_BOX_SIZE.X, MESSAGE_BOX_SIZE.Y);
             ResetInput();
             DisplayTools.WriteInWindowAt("Max : ", INPUT_BOX_POS.X + 1, INPUT_BOX_POS.Y + 1);
 
-            AskCriteria(false, Math.Max(MIN_CRITERIA, min), out int max, out message);
+            AskCriteria(false, Math.Max(GameRules.MIN_CRITERIA, min), out int max, out message);
 
             switch (criteria)
             {

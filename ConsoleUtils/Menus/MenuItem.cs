@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Text;
 
-namespace RPG
+namespace GeneralUtils
 {
     public class MenuItem
     {

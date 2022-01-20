@@ -29,7 +29,6 @@ namespace DbService
         public virtual DbSet<Monstre> Monstre { get; set; }
         public virtual DbSet<Origine> Origine { get; set; }
         public virtual DbSet<RaceMonstre> RaceMonstre { get; set; }
-        public virtual DbSet<Sauvegarde> Sauvegarde { get; set; }
         public virtual DbSet<TypeItem> TypeItem { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -141,6 +140,8 @@ namespace DbService
 
                 entity.HasIndex(e => e.IdInventaire, "joueur_inventaire_idx");
 
+                entity.HasIndex(e => e.IdMapCourante, "joueur_map_idx");
+
                 entity.HasIndex(e => e.IdRace, "joueur_race_idx");
 
                 entity.Property(e => e.IdJoueur).HasColumnName("id_joueur");
@@ -157,11 +158,15 @@ namespace DbService
 
                 entity.Property(e => e.Destin).HasColumnName("destin");
 
+                entity.Property(e => e.EnergieAstrale).HasColumnName("energie_astrale");
+
                 entity.Property(e => e.Experience).HasColumnName("experience");
 
                 entity.Property(e => e.Force).HasColumnName("force");
 
                 entity.Property(e => e.IdInventaire).HasColumnName("id_inventaire");
+
+                entity.Property(e => e.IdMapCourante).HasColumnName("id_map_courante");
 
                 entity.Property(e => e.IdRace).HasColumnName("id_race");
 
@@ -178,11 +183,18 @@ namespace DbService
 
                 entity.Property(e => e.Or).HasColumnName("or");
 
+                entity.Property(e => e.PointsVie).HasColumnName("points_vie");
+
                 entity.HasOne(d => d.IdInventaireNavigation)
                     .WithMany(p => p.Joueur)
                     .HasForeignKey(d => d.IdInventaire)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("joueur_inventaire");
+
+                entity.HasOne(d => d.IdMapCouranteNavigation)
+                    .WithMany(p => p.Joueur)
+                    .HasForeignKey(d => d.IdMapCourante)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("joueur_map");
 
                 entity.HasOne(d => d.IdRaceNavigation)
                     .WithMany(p => p.Joueur)
@@ -200,6 +212,11 @@ namespace DbService
 
                 entity.Property(e => e.IdMap).HasColumnName("id_map");
 
+                entity.Property(e => e.Filename)
+                    .IsRequired()
+                    .HasMaxLength(32)
+                    .HasColumnName("filename");
+
                 entity.Property(e => e.Nom)
                     .IsRequired()
                     .HasMaxLength(32)
@@ -208,11 +225,6 @@ namespace DbService
                 entity.Property(e => e.PositionSpawnX).HasColumnName("position_spawn_x");
 
                 entity.Property(e => e.PositionSpawnY).HasColumnName("position_spawn_y");
-
-                entity.Property(e => e.Url)
-                    .IsRequired()
-                    .HasMaxLength(128)
-                    .HasColumnName("url");
             });
 
             modelBuilder.Entity<Metier>(entity =>
@@ -303,36 +315,6 @@ namespace DbService
                     .IsRequired()
                     .HasMaxLength(16)
                     .HasColumnName("nom");
-            });
-
-            modelBuilder.Entity<Sauvegarde>(entity =>
-            {
-                entity.HasKey(e => e.IdSauvegarde)
-                    .HasName("PRIMARY");
-
-                entity.ToTable("sauvegarde");
-
-                entity.HasIndex(e => e.IdJoueur, "sauvegarde_joueur_idx");
-
-                entity.HasIndex(e => e.IdMapCourante, "sauvegarde_map_idx");
-
-                entity.Property(e => e.IdSauvegarde).HasColumnName("id_sauvegarde");
-
-                entity.Property(e => e.IdJoueur).HasColumnName("id_joueur");
-
-                entity.Property(e => e.IdMapCourante).HasColumnName("id_map_courante");
-
-                entity.HasOne(d => d.IdJoueurNavigation)
-                    .WithMany(p => p.Sauvegarde)
-                    .HasForeignKey(d => d.IdJoueur)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("sauvegarde_joueur");
-
-                entity.HasOne(d => d.IdMapCouranteNavigation)
-                    .WithMany(p => p.Sauvegarde)
-                    .HasForeignKey(d => d.IdMapCourante)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("sauvegarde_map");
             });
 
             modelBuilder.Entity<TypeItem>(entity =>

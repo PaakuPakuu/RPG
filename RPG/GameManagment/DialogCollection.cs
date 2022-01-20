@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace RPG
+namespace RPG.GameManagment
 {
-    public class CharacterCreationTestScene : DefaultScene
+    public class DialogCollection
     {
     }
 }

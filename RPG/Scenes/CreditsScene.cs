@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace RPG
+﻿namespace RPG
 {
     public class CreditsScene : DefaultScene
     {

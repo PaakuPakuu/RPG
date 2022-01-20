@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ConsoleUtils\ConsoleUtils.csproj" />
+    <ProjectReference Include="..\ConsoleUtils\GeneralUtils.csproj" />
     <ProjectReference Include="..\DbService\DbService.csproj" />
   </ItemGroup>
 

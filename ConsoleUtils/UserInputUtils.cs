@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace ConsoleUtils
+namespace GeneralUtils
 {
     public static class UserInputUtils
     {
@@ -53,6 +51,16 @@ namespace ConsoleUtils
             }
 
             return true;
+        }
+
+        public static string GetInputAt(int x, int y)
+        {
+            Console.SetCursorPosition(x, y);
+            Console.CursorVisible = true;
+            string input = Console.ReadLine();
+            Console.CursorVisible = false;
+
+            return input;
         }
     }
 }

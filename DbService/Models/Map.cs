@@ -10,16 +10,16 @@ namespace DbService
         public Map()
         {
             GroupeMonstre = new HashSet<GroupeMonstre>();
-            Sauvegarde = new HashSet<Sauvegarde>();
+            Joueur = new HashSet<Joueur>();
         }
 
         public int IdMap { get; set; }
         public string Nom { get; set; }
-        public string Url { get; set; }
+        public string Filename { get; set; }
         public int PositionSpawnX { get; set; }
         public int PositionSpawnY { get; set; }
 
         public virtual ICollection<GroupeMonstre> GroupeMonstre { get; set; }
-        public virtual ICollection<Sauvegarde> Sauvegarde { get; set; }
+        public virtual ICollection<Joueur> Joueur { get; set; }
     }
 }

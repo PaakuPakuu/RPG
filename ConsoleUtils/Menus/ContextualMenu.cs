@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace RPG
+namespace GeneralUtils
 {
     public class ContextualMenu
     {
