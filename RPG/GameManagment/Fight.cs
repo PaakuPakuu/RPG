@@ -42,7 +42,7 @@ namespace RPG
         public bool NextFighter()
         {
             _currentFighterId++;
-            _currentFighterId %= Ennemies.Count + 1;
+            _currentFighterId %= Ennemies.Count;
 
             return _currentFighterId == 0;
         }

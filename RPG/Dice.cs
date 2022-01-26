@@ -27,12 +27,12 @@ namespace RPG
             return _random.Next(1, _maxNumber + 1);
         }
 
-        public int RollWithAnimation(int x, int y)
+        public int RollWithAnimation(int x = -1, int y = -1)
         {
             int index = 0;
             int number;
-            int numberX = x + 3;
-            int numberY = y + 1;
+            int numberX = (x == -1 ? -1 : x + 3);
+            int numberY = (y == -1 ? -1 : y + 1);
 
             DisplayTools.WriteInWindowCenter(_smallDiceModel, x, y);
 

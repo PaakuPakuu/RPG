@@ -80,6 +80,8 @@ namespace GeneralUtils
         // Colors
         public static readonly string Yellow = "\u001b[33m";
         public static readonly string Green = "\u001b[32m";
+        public static readonly string Grey = "\u001b[90m";
+        public static readonly string Red = "\u001b[31m";
 
         #endregion
 
@@ -123,7 +125,7 @@ namespace GeneralUtils
         {
             Console.OutputEncoding = Encoding.UTF8;
             SetConsoleFont(FONT_NAME);
-            DisableResizeCloseConsoleMenus();
+            DisableResizeConsoleMenus();
 
             Console.Title = "RPG";
             Console.SetWindowSize(WindowWidth, WindowHeight);
@@ -135,7 +137,7 @@ namespace GeneralUtils
         {
             Console.OutputEncoding = Encoding.UTF8;
             SetConsoleFont(FONT_NAME);
-            DisableResizeCloseConsoleMenus();
+            DisableResizeConsoleMenus();
 
             Console.Title = "RPG Editor";
             Console.SetWindowSize(EditorWindowWidth, EditorWindowHeight);
@@ -152,14 +154,14 @@ namespace GeneralUtils
         /// <remarks>
         /// On Window 10, user still can stick the window on the top of the screen to maximize.
         /// </remarks>
-        private static void DisableResizeCloseConsoleMenus()
+        private static void DisableResizeConsoleMenus()
         {
             IntPtr handle = GetConsoleWindow();
             IntPtr sysMenu = GetSystemMenu(handle, false);
 
             if (handle != IntPtr.Zero)
             {
-                DeleteMenu(sysMenu, SC_CLOSE, MF_BYCOMMAND);
+                //DeleteMenu(sysMenu, SC_CLOSE, MF_BYCOMMAND);
                 DeleteMenu(sysMenu, SC_MAXIMIZE, MF_BYCOMMAND);
                 DeleteMenu(sysMenu, SC_SIZE, MF_BYCOMMAND);
             }

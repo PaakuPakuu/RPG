@@ -7,6 +7,29 @@ namespace DbService
 {
     public partial class Metier
     {
+        public Metier()
+        {
+            Joueur = new HashSet<Joueur>();
+        }
+
         public int IdMetier { get; set; }
+        public string Nom { get; set; }
+        public int CourageMin { get; set; }
+        public int CourageMax { get; set; }
+        public int IntelligenceMin { get; set; }
+        public int IntelligenceMax { get; set; }
+        public int CharismeMin { get; set; }
+        public int CharismeMax { get; set; }
+        public int AdresseMin { get; set; }
+        public int AdresseMax { get; set; }
+        public int ForceMin { get; set; }
+        public int ForceMax { get; set; }
+        public float ModificateurPv { get; set; }
+        public int PointsProtection { get; set; }
+        public int Charge { get; set; }
+        public sbyte DeuxMains { get; set; }
+        public sbyte Bouclier { get; set; }
+
+        public virtual ICollection<Joueur> Joueur { get; set; }
     }
 }

@@ -2,7 +2,6 @@
 using GeneralUtils;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace RPG
 {
@@ -22,7 +21,8 @@ namespace RPG
 
         private readonly string[] _invalidName = new string[]
         {
-            "Un héros sans nom ?\nWow ! Quelle originalité..."
+            "Un héros sans nom ?",
+            "Wow ! Quelle originalité..."
         };
 
         private readonly Dice _dice6;
@@ -31,11 +31,6 @@ namespace RPG
         private readonly ContextualMenu _goToOriginMenu;
 
         private string _name;
-        private int _idRace;
-
-        /* ======== */
-
-        private readonly ContextualMenu _originsMenu;
 
         public CharacterCreationScene()
         {
@@ -47,7 +42,7 @@ namespace RPG
 
         public override void ExecuteScene()
         {
-            DisplayTools.WriteInWindowCenter("CRÉATION DE TON HÉROS", y: 4, animated: true);
+            DisplayTools.WriteInWindowCenter("CRÉATION DE TON HÉROS", y: 3, animated: true);
             AskCharacterName();
             RollForCriterias();
             FinalizeCriteriaValues();
@@ -55,11 +50,11 @@ namespace RPG
             _goToOriginMenu.Execute();
             Console.Clear();
 
-            SavePlayer();
-            Game.ActiveScene = new TitleMenuScene();
+            int id = SavePlayer();
+            Game.ActiveScene = new OriginsScene(id, _criteriaValues);
         }
 
-        
+
         private void AskCharacterName()
         {
             DisplayTools.WriteInBufferAt(DisplayTools.Yellow, 0, 0);
@@ -92,52 +87,6 @@ namespace RPG
             }
         }
 
-        private void SavePlayer()
-        {
-            try
-            {
-                using RpgContext rpgContext = new RpgContext();
-
-                Inventaire inventory = new Inventaire()
-                {
-                    Titre = "Baluchon",
-                    Slots = 10
-                };
-                rpgContext.Inventaire.Add(inventory);
-                rpgContext.SaveChanges();
-
-                Joueur newPlayer = new Joueur()
-                {
-                    Courage = _criteriaValues[0],
-                    Intelligence = _criteriaValues[1],
-                    Charisme = _criteriaValues[2],
-                    Adresse = _criteriaValues[3],
-                    Force = _criteriaValues[4],
-                    // temporaire
-                    PointsVie = 0,
-                    EnergieAstrale = 0,
-                    Experience = 0,
-                    Niveau = 0,
-                    IdMapCourante = 2,
-                    IdRace = 1,
-                    Nom = _name,
-                    Or = 0,
-                    Argent = 0,
-                    Debilibuck = 0,
-                    Destin = 0,
-                    ManqueDeBol = 0,
-                    IdInventaire = inventory.IdInventaire
-                };
-
-                rpgContext.Joueur.Add(newPlayer);
-                rpgContext.SaveChanges();
-            }
-            catch
-            {
-
-            }
-        }
-
         private void FinalizeCriteriaValues()
         {
             for (int i = 0; i < _criteriaValues.Count; i++)
@@ -159,6 +108,52 @@ namespace RPG
                 DisplayTools.WriteInWindowAt(crit, 5 + (i * gap), 19);
                 DisplayTools.WriteInWindowAt(_criteriaValues[i].ToString(), 15 + (i * gap), 20);
                 i++;
+            }
+        }
+
+        private int SavePlayer()
+        {
+            try
+            {
+                using RpgContext rpgContext = new RpgContext();
+
+                Inventaire inventory = new Inventaire()
+                {
+                    Titre = "Baluchon",
+                    Slots = 10
+                };
+                rpgContext.Inventaire.Add(inventory);
+                rpgContext.SaveChanges();
+
+                Joueur newPlayer = new Joueur()
+                {
+                    IdMapCourante = 2,
+                    IdInventaire = inventory.IdInventaire,
+                    Courage = _criteriaValues[0],
+                    Intelligence = _criteriaValues[1],
+                    Charisme = _criteriaValues[2],
+                    Adresse = _criteriaValues[3],
+                    Force = _criteriaValues[4],
+                    PointsVie = 0,
+                    EnergieAstrale = 0,
+                    Experience = 0,
+                    Niveau = 1,
+                    Nom = _name,
+                    Or = 0,
+                    Argent = 0,
+                    Destin = 0,
+                    Attaque = GameRules.DEFAULT_ATTACK,
+                    Parade = GameRules.DEFAULT_PARADE
+                };
+
+                rpgContext.Joueur.Add(newPlayer);
+                rpgContext.SaveChanges();
+
+                return newPlayer.IdJoueur;
+            }
+            catch
+            {
+                return -1;
             }
         }
     }

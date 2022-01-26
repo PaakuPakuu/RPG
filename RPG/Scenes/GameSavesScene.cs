@@ -106,6 +106,7 @@ namespace RPG
         private void RemoveSave()
         {
             _rpgContext.Joueur.Remove(_selectedPlayer);
+            _rpgContext.Inventaire.Remove(_rpgContext.Inventaire.Single(i => i.IdInventaire == _selectedPlayer.IdInventaire)); // IdInventaireNavigation = null ??
             _rpgContext.SaveChanges();
             LaunchThisScene();
         }

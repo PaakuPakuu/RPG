@@ -14,7 +14,7 @@ namespace GeneralUtils
         private readonly bool _centeredOnWindowWidth;
         private readonly bool _centeredOnWindowHeight;
         private readonly int _padding;
-        private readonly DisplayTools.BorderStyle _borderStyle;
+        //private readonly DisplayTools.BorderStyle _borderStyle;
         private readonly SelectedStyle _selectedStyle;
         private readonly List<MenuItem> _optionList;
 
@@ -87,11 +87,11 @@ namespace GeneralUtils
             }
         }
 
-        public void Execute()
+        public void Execute(int startIndex = 0)
         {
             InitializeMenu();
             ShowMenu();
-            StartSelection().MenuItemAction();
+            StartSelection(startIndex).MenuItemAction();
         }
         
         public override string ToString()

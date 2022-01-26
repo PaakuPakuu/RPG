@@ -8,8 +8,9 @@ namespace DbService
     public partial class Joueur
     {
         public int IdJoueur { get; set; }
-        public int IdRace { get; set; }
-        public int? IdInventaire { get; set; }
+        public int? IdOrigine { get; set; }
+        public int? IdMetier { get; set; }
+        public int IdInventaire { get; set; }
         public int IdMapCourante { get; set; }
         public string Nom { get; set; }
         public int Experience { get; set; }
@@ -20,15 +21,16 @@ namespace DbService
         public int Adresse { get; set; }
         public int Force { get; set; }
         public int Destin { get; set; }
-        public int Debilibuck { get; set; }
-        public int ManqueDeBol { get; set; }
         public int Or { get; set; }
         public int Argent { get; set; }
         public int PointsVie { get; set; }
         public int EnergieAstrale { get; set; }
+        public int Attaque { get; set; }
+        public int Parade { get; set; }
 
         public virtual Inventaire IdInventaireNavigation { get; set; }
         public virtual Map IdMapCouranteNavigation { get; set; }
-        public virtual Origine IdRaceNavigation { get; set; }
+        public virtual Metier IdMetierNavigation { get; set; }
+        public virtual Origine IdOrigineNavigation { get; set; }
     }
 }

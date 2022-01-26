@@ -24,7 +24,12 @@
 
   <ItemGroup>
     <None Remove="Resources\UI\criterias_creation_template.txt" />
+    <None Remove="Resources\UI\origin_template.txt" />
     <None Remove="Resources\UI\save_template.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Figgle" Version="0.4.0" />
   </ItemGroup>
 
   <ItemGroup>

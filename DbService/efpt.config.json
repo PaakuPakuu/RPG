@@ -18,6 +18,22 @@
          "ObjectType": 0
       },
       {
+         "Name": "competence_choix",
+         "ObjectType": 0
+      },
+      {
+         "Name": "competence_heritee",
+         "ObjectType": 0
+      },
+      {
+         "Name": "competences",
+         "ObjectType": 0
+      },
+      {
+         "Name": "groupe_inventaire",
+         "ObjectType": 0
+      },
+      {
          "Name": "groupe_monstre",
          "ObjectType": 0
       },

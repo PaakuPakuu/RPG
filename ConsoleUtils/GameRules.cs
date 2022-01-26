@@ -20,5 +20,8 @@ namespace GeneralUtils
         public static readonly int MAX_CRITERIA = 13;
 
         public static readonly int TO_ADD_TO_CRITERIA = 7;
+
+        public static readonly int DEFAULT_ATTACK = 8;
+        public static readonly int DEFAULT_PARADE = 10;
     }
 }

@@ -20,6 +20,10 @@ namespace DbService
         }
 
         public virtual DbSet<Boutique> Boutique { get; set; }
+        public virtual DbSet<CompetenceChoix> CompetenceChoix { get; set; }
+        public virtual DbSet<CompetenceHeritee> CompetenceHeritee { get; set; }
+        public virtual DbSet<Competences> Competences { get; set; }
+        public virtual DbSet<GroupeInventaire> GroupeInventaire { get; set; }
         public virtual DbSet<GroupeMonstre> GroupeMonstre { get; set; }
         public virtual DbSet<Inventaire> Inventaire { get; set; }
         public virtual DbSet<Item> Item { get; set; }
@@ -49,6 +53,101 @@ namespace DbService
                     .IsRequired()
                     .HasMaxLength(32)
                     .HasColumnName("nom");
+            });
+
+            modelBuilder.Entity<CompetenceChoix>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("competence_choix");
+
+                entity.HasIndex(e => e.IdOrigine, "competece_choix_origine_idx");
+
+                entity.HasIndex(e => e.IdCompetence, "competence_choix_competence_idx");
+
+                entity.HasIndex(e => e.IdMetier, "competence_choix_metier_idx");
+
+                entity.Property(e => e.IdCompetence).HasColumnName("id_competence");
+
+                entity.Property(e => e.IdMetier).HasColumnName("id_metier");
+
+                entity.Property(e => e.IdOrigine).HasColumnName("id_origine");
+
+                entity.HasOne(d => d.IdCompetenceNavigation)
+                    .WithMany()
+                    .HasForeignKey(d => d.IdCompetence)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("competence_choix_competence");
+
+                entity.HasOne(d => d.IdMetierNavigation)
+                    .WithMany()
+                    .HasForeignKey(d => d.IdMetier)
+                    .HasConstraintName("competence_choix_metier");
+
+                entity.HasOne(d => d.IdOrigineNavigation)
+                    .WithMany()
+                    .HasForeignKey(d => d.IdOrigine)
+                    .HasConstraintName("competece_choix_origine");
+            });
+
+            modelBuilder.Entity<CompetenceHeritee>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("competence_heritee");
+
+                entity.HasIndex(e => e.IdCompetence, "association_competence_competence_idx");
+
+                entity.HasIndex(e => e.IdOrigine, "association_competence_origine_idx");
+
+                entity.HasIndex(e => e.IdMetier, "competence_heritee_metier_idx");
+
+                entity.Property(e => e.IdCompetence).HasColumnName("id_competence");
+
+                entity.Property(e => e.IdMetier).HasColumnName("id_metier");
+
+                entity.Property(e => e.IdOrigine).HasColumnName("id_origine");
+
+                entity.HasOne(d => d.IdCompetenceNavigation)
+                    .WithMany()
+                    .HasForeignKey(d => d.IdCompetence)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("competence_heritee_competence");
+
+                entity.HasOne(d => d.IdMetierNavigation)
+                    .WithMany()
+                    .HasForeignKey(d => d.IdMetier)
+                    .HasConstraintName("competence_heritee_metier");
+
+                entity.HasOne(d => d.IdOrigineNavigation)
+                    .WithMany()
+                    .HasForeignKey(d => d.IdOrigine)
+                    .HasConstraintName("competence_heritee_origine");
+            });
+
+            modelBuilder.Entity<Competences>(entity =>
+            {
+                entity.HasKey(e => e.IdCompetence)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("competences");
+
+                entity.Property(e => e.IdCompetence).HasColumnName("id_competence");
+
+                entity.Property(e => e.Nom)
+                    .IsRequired()
+                    .HasMaxLength(32)
+                    .HasColumnName("nom");
+            });
+
+            modelBuilder.Entity<GroupeInventaire>(entity =>
+            {
+                entity.HasKey(e => e.IdGroupeInventaire)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("groupe_inventaire");
+
+                entity.Property(e => e.IdGroupeInventaire).HasColumnName("id_groupe_inventaire");
             });
 
             modelBuilder.Entity<GroupeMonstre>(entity =>
@@ -142,7 +241,9 @@ namespace DbService
 
                 entity.HasIndex(e => e.IdMapCourante, "joueur_map_idx");
 
-                entity.HasIndex(e => e.IdRace, "joueur_race_idx");
+                entity.HasIndex(e => e.IdMetier, "joueur_metier_idx");
+
+                entity.HasIndex(e => e.IdOrigine, "joueur_race_idx");
 
                 entity.Property(e => e.IdJoueur).HasColumnName("id_joueur");
 
@@ -150,11 +251,11 @@ namespace DbService
 
                 entity.Property(e => e.Argent).HasColumnName("argent");
 
+                entity.Property(e => e.Attaque).HasColumnName("attaque");
+
                 entity.Property(e => e.Charisme).HasColumnName("charisme");
 
                 entity.Property(e => e.Courage).HasColumnName("courage");
-
-                entity.Property(e => e.Debilibuck).HasColumnName("debilibuck");
 
                 entity.Property(e => e.Destin).HasColumnName("destin");
 
@@ -168,11 +269,11 @@ namespace DbService
 
                 entity.Property(e => e.IdMapCourante).HasColumnName("id_map_courante");
 
-                entity.Property(e => e.IdRace).HasColumnName("id_race");
+                entity.Property(e => e.IdMetier).HasColumnName("id_metier");
+
+                entity.Property(e => e.IdOrigine).HasColumnName("id_origine");
 
                 entity.Property(e => e.Intelligence).HasColumnName("intelligence");
-
-                entity.Property(e => e.ManqueDeBol).HasColumnName("manque_de_bol");
 
                 entity.Property(e => e.Niveau).HasColumnName("niveau");
 
@@ -183,11 +284,14 @@ namespace DbService
 
                 entity.Property(e => e.Or).HasColumnName("or");
 
+                entity.Property(e => e.Parade).HasColumnName("parade");
+
                 entity.Property(e => e.PointsVie).HasColumnName("points_vie");
 
                 entity.HasOne(d => d.IdInventaireNavigation)
                     .WithMany(p => p.Joueur)
                     .HasForeignKey(d => d.IdInventaire)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("joueur_inventaire");
 
                 entity.HasOne(d => d.IdMapCouranteNavigation)
@@ -196,11 +300,15 @@ namespace DbService
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("joueur_map");
 
-                entity.HasOne(d => d.IdRaceNavigation)
+                entity.HasOne(d => d.IdMetierNavigation)
                     .WithMany(p => p.Joueur)
-                    .HasForeignKey(d => d.IdRace)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("joueur_race");
+                    .HasForeignKey(d => d.IdMetier)
+                    .HasConstraintName("joueur_metier");
+
+                entity.HasOne(d => d.IdOrigineNavigation)
+                    .WithMany(p => p.Joueur)
+                    .HasForeignKey(d => d.IdOrigine)
+                    .HasConstraintName("joueur_origine");
             });
 
             modelBuilder.Entity<Map>(entity =>
@@ -235,6 +343,41 @@ namespace DbService
                 entity.ToTable("metier");
 
                 entity.Property(e => e.IdMetier).HasColumnName("id_metier");
+
+                entity.Property(e => e.AdresseMax).HasColumnName("adresse_max");
+
+                entity.Property(e => e.AdresseMin).HasColumnName("adresse_min");
+
+                entity.Property(e => e.Bouclier).HasColumnName("bouclier");
+
+                entity.Property(e => e.Charge).HasColumnName("charge");
+
+                entity.Property(e => e.CharismeMax).HasColumnName("charisme_max");
+
+                entity.Property(e => e.CharismeMin).HasColumnName("charisme_min");
+
+                entity.Property(e => e.CourageMax).HasColumnName("courage_max");
+
+                entity.Property(e => e.CourageMin).HasColumnName("courage_min");
+
+                entity.Property(e => e.DeuxMains).HasColumnName("deux_mains");
+
+                entity.Property(e => e.ForceMax).HasColumnName("force_max");
+
+                entity.Property(e => e.ForceMin).HasColumnName("force_min");
+
+                entity.Property(e => e.IntelligenceMax).HasColumnName("intelligence_max");
+
+                entity.Property(e => e.IntelligenceMin).HasColumnName("intelligence_min");
+
+                entity.Property(e => e.ModificateurPv).HasColumnName("modificateur_pv");
+
+                entity.Property(e => e.Nom)
+                    .IsRequired()
+                    .HasMaxLength(32)
+                    .HasColumnName("nom");
+
+                entity.Property(e => e.PointsProtection).HasColumnName("points_protection");
             });
 
             modelBuilder.Entity<Monstre>(entity =>
@@ -280,6 +423,10 @@ namespace DbService
 
                 entity.Property(e => e.AdresseMin).HasColumnName("adresse_min");
 
+                entity.Property(e => e.Bouclier).HasColumnName("bouclier");
+
+                entity.Property(e => e.Charge).HasColumnName("charge");
+
                 entity.Property(e => e.CharismeMax).HasColumnName("charisme_max");
 
                 entity.Property(e => e.CharismeMin).HasColumnName("charisme_min");
@@ -287,6 +434,10 @@ namespace DbService
                 entity.Property(e => e.CourageMax).HasColumnName("courage_max");
 
                 entity.Property(e => e.CourageMin).HasColumnName("courage_min");
+
+                entity.Property(e => e.DeuxMains).HasColumnName("deux_mains");
+
+                entity.Property(e => e.FlairerDanger).HasColumnName("flairer_danger");
 
                 entity.Property(e => e.ForceMax).HasColumnName("force_max");
 
@@ -300,6 +451,10 @@ namespace DbService
                     .IsRequired()
                     .HasMaxLength(16)
                     .HasColumnName("nom");
+
+                entity.Property(e => e.PointsResistance).HasColumnName("points_resistance");
+
+                entity.Property(e => e.PvInitial).HasColumnName("pv_initial");
             });
 
             modelBuilder.Entity<RaceMonstre>(entity =>

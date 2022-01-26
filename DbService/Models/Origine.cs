@@ -24,6 +24,12 @@ namespace DbService
         public int AdresseMax { get; set; }
         public int ForceMin { get; set; }
         public int ForceMax { get; set; }
+        public int PvInitial { get; set; }
+        public int Charge { get; set; }
+        public int FlairerDanger { get; set; }
+        public sbyte DeuxMains { get; set; }
+        public sbyte Bouclier { get; set; }
+        public int PointsResistance { get; set; }
 
         public virtual ICollection<Joueur> Joueur { get; set; }
     }
