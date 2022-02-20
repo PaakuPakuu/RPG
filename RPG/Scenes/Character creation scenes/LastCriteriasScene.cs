@@ -9,12 +9,12 @@ namespace RPG
 {
     public class LastCriteriasScene : DefaultScene
     {
-        private RpgContext _rpgContext;
+        private readonly RpgContext _rpgContext;
 
-        private int _idPlayer;
+        private readonly int _idPlayer;
 
-        private Dice _dice4;
-        private Dice _dice6;
+        private readonly Dice _dice4;
+        private readonly Dice _dice6;
 
         private int _destin;
         private int _fortune;
@@ -49,17 +49,23 @@ namespace RPG
             Console.ReadKey(true);
 
             Save();
-            Game.ActiveScene = new TitleMenuScene();
+            Game.ActiveScene = new GameScene();
         }
 
         private void Save()
         {
-            using RpgContext rpgContext = new RpgContext();
-
             Joueur player = _rpgContext.Joueur.Single(j => j.IdJoueur == _idPlayer);
 
             player.Destin = _destin;
             player.Or = _fortune;
+
+            _rpgContext.SaveChanges();
+
+            Game.Player = Manager.GetPlayer(player);
+            Game.CurrentMap = Manager.GetMap(_rpgContext.Map.Single(m => m.IdMap == 1));
+
+            Game.Player.Position.X = Game.CurrentMap.SpawnPosition.X;
+            Game.Player.Position.Y = Game.CurrentMap.SpawnPosition.Y;
         }
     }
 }

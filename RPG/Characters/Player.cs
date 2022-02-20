@@ -1,4 +1,5 @@
-﻿using GeneralUtils;
+﻿using DbService;
+using GeneralUtils;
 using System;
 
 namespace RPG
@@ -14,9 +15,11 @@ namespace RPG
                 new Point(-1, 0)
             };
 
+        public int Id { get; set; }
+
         public Direction LookingAt { get; private set; }
         public Point PreviousPosition { get; private set; }
-        public Point Position { get; }
+        public Point Position { get; set; }
         public string Sprite { get => _sprites[(int)LookingAt].ToString(); }
 
         public enum PlayerAction
@@ -30,10 +33,9 @@ namespace RPG
             Pause
         }
 
-        public Player(string name) : base(name)
+        public Player()
         {
             PreviousPosition = new Point();
-            Position = Game.CurrentMap.SpawnPosition;
         }
 
         private bool IsIntoMap(Point point) => point.X >= 0 && point.X < Game.CurrentMap.Width && point.Y >= 0 && point.Y < Game.CurrentMap.Height;
@@ -77,7 +79,7 @@ namespace RPG
             PreviousPosition.X = Position.X;
             PreviousPosition.Y = Position.Y;
 
-            if (Game.CurrentMap.IsWalkable(nextPosition) && IsIntoMap(nextPosition))
+            if (IsIntoMap(nextPosition) && Game.CurrentMap.IsWalkable(nextPosition))
             {
                 Position.X = nextPosition.X;
                 Position.Y = nextPosition.Y;

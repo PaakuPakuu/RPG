@@ -127,7 +127,7 @@ namespace GeneralUtils
             SetConsoleFont(FONT_NAME);
             DisableResizeConsoleMenus();
 
-            Console.Title = "RPG";
+            Console.Title = "NAHEULBEUK™";
             Console.SetWindowSize(WindowWidth, WindowHeight);
             Console.SetBufferSize(WindowWidth, WindowHeight);
             Console.CursorVisible = false;
@@ -139,7 +139,7 @@ namespace GeneralUtils
             SetConsoleFont(FONT_NAME);
             DisableResizeConsoleMenus();
 
-            Console.Title = "RPG Editor";
+            Console.Title = "NAHEULBEUK™ Editor";
             Console.SetWindowSize(EditorWindowWidth, EditorWindowHeight);
             Console.SetBufferSize(EditorWindowWidth, EditorWindowHeight);
             Console.CursorVisible = false;
@@ -259,9 +259,10 @@ namespace GeneralUtils
 
         #region Animated
 
-        private static string[] SplitByLength(string display, int maxLength)
+        private static string[] SplitByLength(string display)
         {
             List<string> splitted = new List<string>();
+            int maxLength = TEXT_ANIMATION_MAX_WIDTH;
 
             while (display.Length >= maxLength)
             {
@@ -278,13 +279,13 @@ namespace GeneralUtils
             return splitted.ToArray();
         }
 
-        private static string[] SplitByLength(string[] display)
+        private static string[] SplitByLine(string[] display)
         {
             List<string> splitted = new List<string>();
 
             foreach (string line in display)
             {
-                splitted.AddRange(SplitByLength(line, TEXT_ANIMATION_MAX_WIDTH));
+                splitted.AddRange(SplitByLength(line));
             }
 
             return splitted.ToArray();
@@ -303,9 +304,15 @@ namespace GeneralUtils
         //    return allSplitted.ToArray();
         //}
 
-        public static void WriteInWindowAnimated(string[] display)
+        public static void WriteInDialogBox(string display)
         {
-            List<string> displayList = new List<string>(SplitByLength(display));
+            string [] lines = SplitByLength(display);
+            WriteInDialogBox(lines);
+        }
+
+        public static void WriteInDialogBox(string[] display)
+        {
+            List<string> displayList = new List<string>(SplitByLine(display));
             string[] lines;
             int indexToDelete;
             int positionY = WindowHeight - TEXT_ANIMATION_MAX_ROWS - 1;

@@ -15,7 +15,7 @@ namespace RPG
         private readonly Point SAVES_POS = new Point(7, 5);
         private readonly int SAVES_GAP = 4;
 
-        private readonly string _saveTemplate;
+        private readonly string _template;
 
         private readonly ContextualMenu _profilesMenu;
         private readonly ContextualMenu _profileActionMenu;
@@ -27,18 +27,18 @@ namespace RPG
         {
             _rpgContext = new RpgContext();
 
-            _saveTemplate = string.Join("\n", ResourcesUtils.GetTemplate($"{ResourcesUtils.UI_PATH}/save_template.txt"));
+            _template = string.Join("\n", ResourcesUtils.GetFileLines($"{ResourcesUtils.UI_PATH}/save_template.txt"));
 
             _profilesMenu = new ContextualMenu(x: SAVES_POS.X, y: SAVES_POS.Y, padding: SAVES_GAP - 1, selectedStyle: ContextualMenu.SelectedStyle.Reversed);
 
             _profileActionMenu = new ContextualMenu(x: ScreenWidth - 12, y: ScreenHeight - 7, padding: 1, selectedStyle: ContextualMenu.SelectedStyle.Arrow);
-            _profileActionMenu.AddMenuItem("Charger", TempAddNewPlayer);
+            _profileActionMenu.AddMenuItem("Charger", LoadSelectedPlayerGame);
             _profileActionMenu.AddMenuItem("Supprimer", AskToRemove);
-            _profileActionMenu.AddMenuItem("Retour", LaunchThisScene);
+            _profileActionMenu.AddMenuItem("Retour", RestartThisScene);
 
             _confirmRemoveMenu = new ContextualMenu(padding: 1, centered: true, selectedStyle: ContextualMenu.SelectedStyle.Dashes);
             _confirmRemoveMenu.AddMenuItem("Oui", RemoveSave);
-            _confirmRemoveMenu.AddMenuItem("Annuler", LaunchThisScene);
+            _confirmRemoveMenu.AddMenuItem("Annuler", RestartThisScene);
         }
 
         public override void ExecuteScene()
@@ -50,7 +50,7 @@ namespace RPG
             foreach (Joueur player in saves)
             {
                 level = player.Niveau.ToString().PadLeft(2, '0').PadRight(3);
-                DisplayTools.WriteInWindowAt(string.Format(_saveTemplate, level), SAVES_POS.X - 3, SAVES_POS.Y - 1 + (SAVES_GAP * menuY));
+                DisplayTools.WriteInWindowAt(string.Format(_template, level), SAVES_POS.X - 3, SAVES_POS.Y - 1 + (SAVES_GAP * menuY));
                 _profilesMenu.AddMenuItem(player.Nom, () => { ExecuteProfileAction(player); });
 
                 menuY++;
@@ -68,27 +68,31 @@ namespace RPG
 
         #region Actions
 
-        private void TempAddNewPlayer()
+        private void LoadSelectedPlayerGame()
         {
-            DisplayTools.WriteInWindowAnimated(new string[]
-            {
-                "Vous vous apprétez à créer un nouveau personnage."
-            });
-            DisplayTools.WriteInWindowAnimated(new string[]
-            {
-                "Cependant, le développeur n'a pas encore implémenté cette",
-                "possibilité..."
-            });
-            DisplayTools.WriteInWindowAnimated(new string[]
-            {
-                "HONTE À LUI !"
-            });
-            DisplayTools.WriteInWindowAnimated(new string[]
-            {
-                "Nan j'déconne, il fait de son mieux. Calme-toi."
-            });
+            //DisplayTools.WriteInDialogBox(new string[]
+            //{
+            //    "Vous vous apprétez à créer un nouveau personnage."
+            //});
+            //DisplayTools.WriteInDialogBox(new string[]
+            //{
+            //    "Cependant, le développeur n'a pas encore implémenté cette",
+            //    "possibilité..."
+            //});
+            //DisplayTools.WriteInDialogBox(new string[]
+            //{
+            //    "HONTE À LUI !"
+            //});
+            //DisplayTools.WriteInDialogBox(new string[]
+            //{
+            //    "Nan j'déconne, il fait de son mieux. Calme-toi."
+            //});
 
-            LaunchThisScene();
+            //RestartThisScene();
+
+            Game.Player = Manager.GetPlayer(_selectedPlayer);
+            Game.CurrentMap = Manager.GetMap(_rpgContext.Map.Single(m => m.IdMap == _selectedPlayer.IdMapCourante));
+            Game.ActiveScene = new GameScene();
         }
 
         private void ExecuteProfileAction(Joueur player)
@@ -108,12 +112,12 @@ namespace RPG
             _rpgContext.Joueur.Remove(_selectedPlayer);
             _rpgContext.Inventaire.Remove(_rpgContext.Inventaire.Single(i => i.IdInventaire == _selectedPlayer.IdInventaire)); // IdInventaireNavigation = null ??
             _rpgContext.SaveChanges();
-            LaunchThisScene();
+            RestartThisScene();
         }
 
         private void LaunchTitleMenuScene() => Game.ActiveScene = new TitleMenuScene();
 
-        private void LaunchThisScene() => Game.ActiveScene = new GameSavesScene();
+        private void RestartThisScene() => Game.ActiveScene = new GameSavesScene();
 
         private void LaunchCharacterCreationScene() => Game.ActiveScene = new CharacterCreationScene();
 

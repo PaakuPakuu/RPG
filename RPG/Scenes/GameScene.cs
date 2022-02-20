@@ -1,19 +1,25 @@
-﻿using GeneralUtils;
+﻿using DbService;
+using GeneralUtils;
 using System;
+using System.Linq;
 
 namespace RPG
 {
     public class GameScene : DefaultScene
     {
+        private readonly RpgContext _rpgContext;
+
         private bool _changeScene;
         private readonly ContextualMenu _pauseMenu;
 
         public GameScene()
         {
+            _rpgContext = new RpgContext();
+
             _changeScene = false;
             _pauseMenu = new ContextualMenu(centered: true, padding: 1);
             _pauseMenu.AddMenuItem("Reprendre", LeavePauseMenu);
-            _pauseMenu.AddMenuItem("Quitter", LaunchTitleMenuScene);
+            _pauseMenu.AddMenuItem("Quitter", SaveAndLaunchTitleMenuScene);
         }
 
         private void UpdateWindowPosition()
@@ -70,6 +76,23 @@ namespace RPG
             }
         }
 
+        private void QuickSaveGame()
+        {
+            Joueur player = _rpgContext.Joueur.Single(j => j.IdJoueur == Game.Player.Id);
+
+            player.PositionX = Game.Player.Position.X;
+            player.PositionY = Game.Player.Position.Y;
+            player.PointsVie = Game.Player.Stats.Health;
+            player.Niveau = Game.Player.Stats.Level;
+            player.Experience = Game.Player.Stats.Experience;
+            player.Or = Game.Player.Stats.Gold;
+            player.Argent = Game.Player.Stats.Silver;
+            player.Destin = Game.Player.Stats.Destin;
+            player.IdMapCourante = Game.CurrentMap.Id;
+
+            _rpgContext.SaveChanges();
+        }
+
         #region Actions
 
         private void LeavePauseMenu()
@@ -78,8 +101,9 @@ namespace RPG
             Game.Player.Draw();
         }
 
-        private void LaunchTitleMenuScene()
+        private void SaveAndLaunchTitleMenuScene()
         {
+            QuickSaveGame();
             _changeScene = true;
             Game.ActiveScene = new TitleMenuScene();
         }

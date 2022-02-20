@@ -7,6 +7,7 @@ namespace DbService
 {
     public partial class CompetenceHeritee
     {
+        public int IdAssociation { get; set; }
         public int IdCompetence { get; set; }
         public int? IdOrigine { get; set; }
         public int? IdMetier { get; set; }

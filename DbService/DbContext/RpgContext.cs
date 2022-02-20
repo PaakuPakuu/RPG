@@ -57,7 +57,8 @@ namespace DbService
 
             modelBuilder.Entity<CompetenceChoix>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.IdAssociation)
+                    .HasName("PRIMARY");
 
                 entity.ToTable("competence_choix");
 
@@ -67,6 +68,8 @@ namespace DbService
 
                 entity.HasIndex(e => e.IdMetier, "competence_choix_metier_idx");
 
+                entity.Property(e => e.IdAssociation).HasColumnName("id_association");
+
                 entity.Property(e => e.IdCompetence).HasColumnName("id_competence");
 
                 entity.Property(e => e.IdMetier).HasColumnName("id_metier");
@@ -74,25 +77,26 @@ namespace DbService
                 entity.Property(e => e.IdOrigine).HasColumnName("id_origine");
 
                 entity.HasOne(d => d.IdCompetenceNavigation)
-                    .WithMany()
+                    .WithMany(p => p.CompetenceChoix)
                     .HasForeignKey(d => d.IdCompetence)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("competence_choix_competence");
 
                 entity.HasOne(d => d.IdMetierNavigation)
-                    .WithMany()
+                    .WithMany(p => p.CompetenceChoix)
                     .HasForeignKey(d => d.IdMetier)
                     .HasConstraintName("competence_choix_metier");
 
                 entity.HasOne(d => d.IdOrigineNavigation)
-                    .WithMany()
+                    .WithMany(p => p.CompetenceChoix)
                     .HasForeignKey(d => d.IdOrigine)
                     .HasConstraintName("competece_choix_origine");
             });
 
             modelBuilder.Entity<CompetenceHeritee>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.IdAssociation)
+                    .HasName("PRIMARY");
 
                 entity.ToTable("competence_heritee");
 
@@ -102,6 +106,8 @@ namespace DbService
 
                 entity.HasIndex(e => e.IdMetier, "competence_heritee_metier_idx");
 
+                entity.Property(e => e.IdAssociation).HasColumnName("id_association");
+
                 entity.Property(e => e.IdCompetence).HasColumnName("id_competence");
 
                 entity.Property(e => e.IdMetier).HasColumnName("id_metier");
@@ -109,18 +115,18 @@ namespace DbService
                 entity.Property(e => e.IdOrigine).HasColumnName("id_origine");
 
                 entity.HasOne(d => d.IdCompetenceNavigation)
-                    .WithMany()
+                    .WithMany(p => p.CompetenceHeritee)
                     .HasForeignKey(d => d.IdCompetence)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("competence_heritee_competence");
 
                 entity.HasOne(d => d.IdMetierNavigation)
-                    .WithMany()
+                    .WithMany(p => p.CompetenceHeritee)
                     .HasForeignKey(d => d.IdMetier)
                     .HasConstraintName("competence_heritee_metier");
 
                 entity.HasOne(d => d.IdOrigineNavigation)
-                    .WithMany()
+                    .WithMany(p => p.CompetenceHeritee)
                     .HasForeignKey(d => d.IdOrigine)
                     .HasConstraintName("competence_heritee_origine");
             });
@@ -275,6 +281,8 @@ namespace DbService
 
                 entity.Property(e => e.Intelligence).HasColumnName("intelligence");
 
+                entity.Property(e => e.MaxPointsVie).HasColumnName("max_points_vie");
+
                 entity.Property(e => e.Niveau).HasColumnName("niveau");
 
                 entity.Property(e => e.Nom)
@@ -287,6 +295,10 @@ namespace DbService
                 entity.Property(e => e.Parade).HasColumnName("parade");
 
                 entity.Property(e => e.PointsVie).HasColumnName("points_vie");
+
+                entity.Property(e => e.PositionX).HasColumnName("position_X");
+
+                entity.Property(e => e.PositionY).HasColumnName("position_Y");
 
                 entity.HasOne(d => d.IdInventaireNavigation)
                     .WithMany(p => p.Joueur)

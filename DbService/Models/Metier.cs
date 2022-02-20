@@ -9,6 +9,8 @@ namespace DbService
     {
         public Metier()
         {
+            CompetenceChoix = new HashSet<CompetenceChoix>();
+            CompetenceHeritee = new HashSet<CompetenceHeritee>();
             Joueur = new HashSet<Joueur>();
         }
 
@@ -30,6 +32,8 @@ namespace DbService
         public sbyte DeuxMains { get; set; }
         public sbyte Bouclier { get; set; }
 
+        public virtual ICollection<CompetenceChoix> CompetenceChoix { get; set; }
+        public virtual ICollection<CompetenceHeritee> CompetenceHeritee { get; set; }
         public virtual ICollection<Joueur> Joueur { get; set; }
     }
 }

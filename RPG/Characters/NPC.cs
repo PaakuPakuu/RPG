@@ -2,7 +2,7 @@
 {
     public class NPC : Character
     {
-        public NPC(string name) : base(name)
+        public NPC(string name)
         {
         }
     }

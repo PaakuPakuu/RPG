@@ -93,7 +93,7 @@ namespace RPG
 
         private void PrintOriginTemplate()
         {
-            string[] template = ResourcesUtils.GetTemplate($"{ResourcesUtils.UI_PATH}/origin_template.txt");
+            string[] template = ResourcesUtils.GetFileLines($"{ResourcesUtils.UI_PATH}/origin_template.txt");
             DisplayTools.WriteInBufferAt(DisplayTools.Yellow, 0, 0);
             DisplayTools.WriteInWindowAt(template, 2, 3);
             DisplayTools.WriteInBufferAt(DisplayTools.Reset, 0, 0);

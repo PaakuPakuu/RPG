@@ -9,8 +9,8 @@ namespace RPGEditor
         private readonly Point BOX_SIZE;
         private readonly int MENU_X = 6;
 
-        private ContextualMenu _firstMenu;
-        private ContextualMenu _player;
+        private readonly ContextualMenu _firstMenu;
+        private readonly ContextualMenu _player;
 
         public MenusScene() : base(DisplayTools.EditorWindowWidth, DisplayTools.EditorWindowHeight)
         {

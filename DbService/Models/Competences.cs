@@ -7,7 +7,16 @@ namespace DbService
 {
     public partial class Competences
     {
+        public Competences()
+        {
+            CompetenceChoix = new HashSet<CompetenceChoix>();
+            CompetenceHeritee = new HashSet<CompetenceHeritee>();
+        }
+
         public int IdCompetence { get; set; }
         public string Nom { get; set; }
+
+        public virtual ICollection<CompetenceChoix> CompetenceChoix { get; set; }
+        public virtual ICollection<CompetenceHeritee> CompetenceHeritee { get; set; }
     }
 }

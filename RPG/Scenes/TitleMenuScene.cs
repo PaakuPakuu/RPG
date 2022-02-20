@@ -72,7 +72,7 @@ O[\\\\\\\\\(O):::<=============================================-
 
         private void LaunchMapTestScene() => Game.ActiveScene = new MapTestScene();
 
-        private void LaunchFightTestScene() => Game.ActiveScene = new CombatScene(new Player("Paku"), new Ennemy("Sukai"), new Ennemy("Gros Guc'"), new Ennemy("IovaSan"));
+        private void LaunchFightTestScene() => Game.ActiveScene = new CombatScene(new Player() { Name = "Paku" }, new Ennemy("Sukai"), new Ennemy("Gros Guc'"), new Ennemy("IovaSan"));
 
         private void LaunchDiceAnimationTestScene() => Game.ActiveScene = new DiceAnimationTest();
 

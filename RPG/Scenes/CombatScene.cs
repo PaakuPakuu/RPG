@@ -39,7 +39,7 @@ namespace RPG
             _attacksMenu = new ContextualMenu();
             _attacksMenu.AddMenuItem("Coup de poing", () => { });
 
-            _fightTemplate = File.ReadAllLines("Resources/UI/fight_template.txt");
+            _fightTemplate = File.ReadAllLines($"{ResourcesUtils.UI_PATH}/fight_template.txt");
 
             // Initialize positions
 

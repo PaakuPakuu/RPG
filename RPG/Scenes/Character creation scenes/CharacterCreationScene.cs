@@ -19,11 +19,7 @@ namespace RPG
             new Point(61, 8)
         };
 
-        private readonly string[] _invalidName = new string[]
-        {
-            "Un héros sans nom ?",
-            "Wow ! Quelle originalité..."
-        };
+        private readonly string _invalidName = "Un héros sans nom ? Wow ! Quelle originalité...";
 
         private readonly Dice _dice6;
         private readonly List<int> _criteriaValues;
@@ -70,7 +66,7 @@ namespace RPG
 
                 if (!valid)
                 {
-                    DisplayTools.WriteInWindowAnimated(_invalidName);
+                    DisplayTools.WriteInDialogBox(_invalidName);
                 }
             }
         }
@@ -97,7 +93,7 @@ namespace RPG
 
         private void ShowCriterias()
         {
-            string[] template = ResourcesUtils.GetTemplate($"{ResourcesUtils.UI_PATH}/criterias_creation_template.txt");
+            string[] template = ResourcesUtils.GetFileLines($"{ResourcesUtils.UI_PATH}/criterias_creation_template.txt");
             int i = 0;
             const int gap = 15;
 

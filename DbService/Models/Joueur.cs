@@ -24,9 +24,12 @@ namespace DbService
         public int Or { get; set; }
         public int Argent { get; set; }
         public int PointsVie { get; set; }
+        public int MaxPointsVie { get; set; }
         public int EnergieAstrale { get; set; }
         public int Attaque { get; set; }
         public int Parade { get; set; }
+        public int PositionX { get; set; }
+        public int PositionY { get; set; }
 
         public virtual Inventaire IdInventaireNavigation { get; set; }
         public virtual Map IdMapCouranteNavigation { get; set; }

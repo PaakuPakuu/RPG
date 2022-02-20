@@ -18,18 +18,20 @@ namespace RPG
         private readonly int _width;
         private readonly int _height;
 
+        public int Id { get; set; }
+
         public int Width { get => _width; }
         public int Height { get => _height; }
         public Point PositionInBuffer { get; }
         public string[] MapDisplay { get; }
-        public Point SpawnPosition { get; }
+        public Point SpawnPosition { get; set; }
 
         public Map(string fileName = "")
         {
             // Get ascii display from .map file
             try
             {
-                MapDisplay = ResourcesUtils.GetTemplate($"{ResourcesUtils.MAPS_PATH}/{fileName}.map");
+                MapDisplay = ResourcesUtils.GetFileLines($"{ResourcesUtils.MAPS_PATH}/{fileName}.map");
             }
             catch
             {

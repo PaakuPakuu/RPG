@@ -2,7 +2,7 @@
 {
     public class Ennemy : Combatant
     {
-        public Ennemy(string name) : base(name)
+        public Ennemy(string name)
         {
 
         }

@@ -13,8 +13,6 @@ namespace RPG
 
         private static void InitializeGame()
         {
-            CurrentMap = new Map("donjon_1"); // Temporaire : select bdd
-            Player = new Player("player"); // Temporaire : select bdd
             ActiveScene = new TitleMenuScene();
 
             DisplayTools.InitializeGameWindow();

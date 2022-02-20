@@ -2,11 +2,11 @@
 {
     public abstract class Combatant : Character
     {
-        public CombatantStats Stats { get; private set; }
+        public HeroStats Stats { get; set; }
 
-        protected Combatant(string name) : base(name)
+        protected Combatant()
         {
-            Stats = new CombatantStats();
+            Stats = new HeroStats();
         }
 
         public void Attack(Combatant target)

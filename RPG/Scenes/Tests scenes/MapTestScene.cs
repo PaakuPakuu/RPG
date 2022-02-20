@@ -14,7 +14,7 @@ namespace RPG
         {
             Game.CurrentMap = new Map("map_test");
 
-            _player = new Player("player");
+            _player = new Player();
 
             _changeScene = false;
             _pauseMenu = new ContextualMenu(centered: true, padding: 1);

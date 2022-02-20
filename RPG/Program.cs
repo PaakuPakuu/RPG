@@ -1,4 +1,7 @@
-﻿namespace RPG
+﻿using GeneralUtils;
+using System;
+
+namespace RPG
 {
     class Program
     {
