@@ -6,27 +6,23 @@ namespace RPG
     {
         private int _currentFighterId;
 
+        private List<Combatant> _fighters;
+
         public int Turns { get; private set; }
         public Player Player { get; private set; }
         public List<Ennemy> Ennemies { get; private set; }
 
-        public Combatant CurrentFighter
-        {
-            get
-            {
-                if (_currentFighterId == 0)
-                {
-                    return Player;
-                }
-
-                return Ennemies[_currentFighterId - 1];
-            }
-        }
+        public Combatant CurrentFighter { get => Ennemies[_currentFighterId]; }
 
         public bool Fighting { get; private set; }
 
         public Fight(Player player, List<Ennemy> ennemies)
         {
+            _fighters = new List<Combatant>(ennemies)
+            {
+                player
+            };
+
             Player = player;
             Ennemies = ennemies;
             Fighting = false;
@@ -38,25 +34,18 @@ namespace RPG
             Fighting = true;
         }
 
-        // 0 => player, sinon ennemy
-        public bool NextFighter()
+
+        public void NextFighter()
         {
             _currentFighterId++;
-            _currentFighterId %= Ennemies.Count;
-
-            return _currentFighterId == 0;
+            _currentFighterId %= _fighters.Count;
         }
 
         public bool IsOver()
         {
-            if (Player.Stats.Health <= 0)
-            {
-                return true;
-            }
-
             foreach (Combatant c in Ennemies)
             {
-                if (c.Stats.Health == 0)
+                if (c.Health == 0)
                 {
                     return true;
                 }

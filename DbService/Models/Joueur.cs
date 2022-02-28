@@ -7,6 +7,11 @@ namespace DbService
 {
     public partial class Joueur
     {
+        public Joueur()
+        {
+            GroupeMonstreJoueur = new HashSet<GroupeMonstreJoueur>();
+        }
+
         public int IdJoueur { get; set; }
         public int? IdOrigine { get; set; }
         public int? IdMetier { get; set; }
@@ -30,10 +35,12 @@ namespace DbService
         public int Parade { get; set; }
         public int PositionX { get; set; }
         public int PositionY { get; set; }
+        public sbyte Mort { get; set; }
 
         public virtual Inventaire IdInventaireNavigation { get; set; }
         public virtual Map IdMapCouranteNavigation { get; set; }
         public virtual Metier IdMetierNavigation { get; set; }
         public virtual Origine IdOrigineNavigation { get; set; }
+        public virtual ICollection<GroupeMonstreJoueur> GroupeMonstreJoueur { get; set; }
     }
 }

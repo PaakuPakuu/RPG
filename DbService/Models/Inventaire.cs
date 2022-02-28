@@ -17,6 +17,7 @@ namespace DbService
         public int? IdBoutique { get; set; }
         public int Slots { get; set; }
         public string Titre { get; set; }
+        public int Poids { get; set; }
 
         public virtual Boutique IdBoutiqueNavigation { get; set; }
         public virtual ICollection<Item> Item { get; set; }

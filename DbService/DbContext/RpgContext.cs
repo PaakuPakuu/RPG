@@ -24,7 +24,9 @@ namespace DbService
         public virtual DbSet<CompetenceHeritee> CompetenceHeritee { get; set; }
         public virtual DbSet<Competences> Competences { get; set; }
         public virtual DbSet<GroupeInventaire> GroupeInventaire { get; set; }
+        public virtual DbSet<GroupeItem> GroupeItem { get; set; }
         public virtual DbSet<GroupeMonstre> GroupeMonstre { get; set; }
+        public virtual DbSet<GroupeMonstreJoueur> GroupeMonstreJoueur { get; set; }
         public virtual DbSet<Inventaire> Inventaire { get; set; }
         public virtual DbSet<Item> Item { get; set; }
         public virtual DbSet<Joueur> Joueur { get; set; }
@@ -156,6 +158,21 @@ namespace DbService
                 entity.Property(e => e.IdGroupeInventaire).HasColumnName("id_groupe_inventaire");
             });
 
+            modelBuilder.Entity<GroupeItem>(entity =>
+            {
+                entity.HasKey(e => e.IdGroupe)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("groupe_item");
+
+                entity.Property(e => e.IdGroupe).HasColumnName("id_groupe");
+
+                entity.Property(e => e.Nom)
+                    .IsRequired()
+                    .HasMaxLength(32)
+                    .HasColumnName("nom");
+            });
+
             modelBuilder.Entity<GroupeMonstre>(entity =>
             {
                 entity.HasKey(e => e.IdGroupeMonstre)
@@ -167,8 +184,6 @@ namespace DbService
 
                 entity.Property(e => e.IdGroupeMonstre).HasColumnName("id_groupe_monstre");
 
-                entity.Property(e => e.EstBattu).HasColumnName("est_battu");
-
                 entity.Property(e => e.IdMap).HasColumnName("id_map");
 
                 entity.HasOne(d => d.IdMapNavigation)
@@ -176,6 +191,38 @@ namespace DbService
                     .HasForeignKey(d => d.IdMap)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("groupe_monstre_map");
+            });
+
+            modelBuilder.Entity<GroupeMonstreJoueur>(entity =>
+            {
+                entity.HasKey(e => e.IdAssociation)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("groupe_monstre_joueur");
+
+                entity.HasIndex(e => e.IdGroupeMonstre, "groupemonstre_groupe_idx");
+
+                entity.HasIndex(e => e.IdJoueur, "groupemonstre_joueur_idx");
+
+                entity.Property(e => e.IdAssociation).HasColumnName("id_association");
+
+                entity.Property(e => e.EstBattu).HasColumnName("est_battu");
+
+                entity.Property(e => e.IdGroupeMonstre).HasColumnName("id_groupe_monstre");
+
+                entity.Property(e => e.IdJoueur).HasColumnName("id_joueur");
+
+                entity.HasOne(d => d.IdGroupeMonstreNavigation)
+                    .WithMany(p => p.GroupeMonstreJoueur)
+                    .HasForeignKey(d => d.IdGroupeMonstre)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("groupemonstre_groupe");
+
+                entity.HasOne(d => d.IdJoueurNavigation)
+                    .WithMany(p => p.GroupeMonstreJoueur)
+                    .HasForeignKey(d => d.IdJoueur)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("groupemonstre_joueur");
             });
 
             modelBuilder.Entity<Inventaire>(entity =>
@@ -190,6 +237,8 @@ namespace DbService
                 entity.Property(e => e.IdInventaire).HasColumnName("id_inventaire");
 
                 entity.Property(e => e.IdBoutique).HasColumnName("id_boutique");
+
+                entity.Property(e => e.Poids).HasColumnName("poids");
 
                 entity.Property(e => e.Slots).HasColumnName("slots");
 
@@ -282,6 +331,8 @@ namespace DbService
                 entity.Property(e => e.Intelligence).HasColumnName("intelligence");
 
                 entity.Property(e => e.MaxPointsVie).HasColumnName("max_points_vie");
+
+                entity.Property(e => e.Mort).HasColumnName("mort");
 
                 entity.Property(e => e.Niveau).HasColumnName("niveau");
 
@@ -409,6 +460,10 @@ namespace DbService
 
                 entity.Property(e => e.IdRace).HasColumnName("id_race");
 
+                entity.Property(e => e.PointsResistance).HasColumnName("points_resistance");
+
+                entity.Property(e => e.PointsVie).HasColumnName("points_vie");
+
                 entity.HasOne(d => d.IdGroupeNavigation)
                     .WithMany(p => p.Monstre)
                     .HasForeignKey(d => d.IdGroupe)
@@ -491,11 +546,26 @@ namespace DbService
 
                 entity.ToTable("type_item");
 
+                entity.HasIndex(e => e.IdGroupe, "item_group_idx");
+
                 entity.Property(e => e.IdTypeItem).HasColumnName("id_type_item");
 
-                entity.Property(e => e.Nom).HasColumnName("nom");
+                entity.Property(e => e.IdGroupe).HasColumnName("id_groupe");
+
+                entity.Property(e => e.Nom)
+                    .IsRequired()
+                    .HasMaxLength(32)
+                    .HasColumnName("nom");
 
                 entity.Property(e => e.Prix).HasColumnName("prix");
+
+                entity.Property(e => e.Vente).HasColumnName("vente");
+
+                entity.HasOne(d => d.IdGroupeNavigation)
+                    .WithMany(p => p.TypeItem)
+                    .HasForeignKey(d => d.IdGroupe)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("item_group");
             });
 
             OnModelCreatingPartial(modelBuilder);

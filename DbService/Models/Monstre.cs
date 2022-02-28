@@ -10,6 +10,8 @@ namespace DbService
         public int IdMonstre { get; set; }
         public int IdGroupe { get; set; }
         public int IdRace { get; set; }
+        public int PointsVie { get; set; }
+        public int PointsResistance { get; set; }
 
         public virtual GroupeMonstre IdGroupeNavigation { get; set; }
         public virtual RaceMonstre IdRaceNavigation { get; set; }

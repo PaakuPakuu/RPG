@@ -1,6 +1,7 @@
 ﻿using DbService;
 using GeneralUtils;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace RPG
@@ -11,6 +12,7 @@ namespace RPG
 
         private bool _changeScene;
         private readonly ContextualMenu _pauseMenu;
+        private readonly List<List<Ennemy>> _ennemyHords;
 
         public GameScene()
         {
@@ -20,6 +22,12 @@ namespace RPG
             _pauseMenu = new ContextualMenu(centered: true, padding: 1);
             _pauseMenu.AddMenuItem("Reprendre", LeavePauseMenu);
             _pauseMenu.AddMenuItem("Quitter", SaveAndLaunchTitleMenuScene);
+
+            _ennemyHords = new List<List<Ennemy>>()
+            {
+                Manager.GetEnnemies(),
+
+            };
         }
 
         private void UpdateWindowPosition()
@@ -82,12 +90,12 @@ namespace RPG
 
             player.PositionX = Game.Player.Position.X;
             player.PositionY = Game.Player.Position.Y;
-            player.PointsVie = Game.Player.Stats.Health;
-            player.Niveau = Game.Player.Stats.Level;
-            player.Experience = Game.Player.Stats.Experience;
-            player.Or = Game.Player.Stats.Gold;
-            player.Argent = Game.Player.Stats.Silver;
-            player.Destin = Game.Player.Stats.Destin;
+            player.PointsVie = Game.Player.Health;
+            player.Niveau = Game.Player.Level;
+            player.Experience = Game.Player.Experience;
+            player.Or = Game.Player.Gold;
+            player.Argent = Game.Player.Silver;
+            player.Destin = Game.Player.Destin;
             player.IdMapCourante = Game.CurrentMap.Id;
 
             _rpgContext.SaveChanges();

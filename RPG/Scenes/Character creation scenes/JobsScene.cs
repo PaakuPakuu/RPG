@@ -202,6 +202,8 @@ namespace RPG
         private void SaveJob()
         {
             _player.IdMetier = CurrentJob.IdMetier;
+            _player.MaxPointsVie += (int)CurrentJob.ModificateurPv;
+            _player.PointsVie = _player.MaxPointsVie;
             _rpgContext.SaveChanges();
         }
     }

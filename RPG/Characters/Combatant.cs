@@ -2,22 +2,24 @@
 {
     public abstract class Combatant : Character
     {
-        public HeroStats Stats { get; set; }
+        #region Stats
 
-        protected Combatant()
-        {
-            Stats = new HeroStats();
-        }
+        public int Attack { get; set; }
+        public int Parade { get; set; }
+        public int Impact { get; set; }
+        public int Courage { get; set; }
+        public int Health { get; set; }
+        public int MaxHealth { get; set; }
 
-        public void Attack(Combatant target)
-        {
-            target.TakeDamage(1);
-        }
+        #endregion
         
         // Renvoie le montant réel des dégâts reçus
         public int TakeDamage(int amount)
         {
-            Stats.Health -= amount;
+            Health -= amount;
+
+            // appliquer la défense
+
             return amount;
         }
     }

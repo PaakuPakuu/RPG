@@ -204,6 +204,8 @@ namespace RPG
         private void SaveOrigin()
         {
             _player.IdOrigine = CurrentOrigin.IdOrigine;
+            _player.MaxPointsVie = CurrentOrigin.PvInitial;
+            _player.PointsVie = CurrentOrigin.PvInitial;
             _rpgContext.SaveChanges();
         }
     }

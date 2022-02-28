@@ -15,7 +15,7 @@ namespace RPG
 
         public override bool Apply(Combatant target)
         {
-            target.Stats.Health += HealingPoints;
+            target.Health += HealingPoints;
             return true;
         }
     }

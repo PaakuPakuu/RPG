@@ -34,7 +34,15 @@
          "ObjectType": 0
       },
       {
+         "Name": "groupe_item",
+         "ObjectType": 0
+      },
+      {
          "Name": "groupe_monstre",
+         "ObjectType": 0
+      },
+      {
+         "Name": "groupe_monstre_joueur",
          "ObjectType": 0
       },
       {

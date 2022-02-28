@@ -12,7 +12,7 @@ namespace RPG
         {
             _titleMenu = new ContextualMenu(y: 20, centered: true, padding: 1, selectedStyle: ContextualMenu.SelectedStyle.DoubleArrow);
             _titleMenu.AddMenuItem("Jouer", LaunchGameSavesScene);
-            _titleMenu.AddMenuItem("Menu des tests", ShowTestsMenu);
+            //_titleMenu.AddMenuItem("Menu des tests", ShowTestsMenu);
             _titleMenu.AddMenuItem("Options", LaunchSettingsScene);
             _titleMenu.AddMenuItem("Crédits", LaunchCreditsScene);
             _titleMenu.AddMenuItem("Quitter", EndGame);
@@ -72,7 +72,7 @@ O[\\\\\\\\\(O):::<=============================================-
 
         private void LaunchMapTestScene() => Game.ActiveScene = new MapTestScene();
 
-        private void LaunchFightTestScene() => Game.ActiveScene = new CombatScene(new Player() { Name = "Paku" }, new Ennemy("Sukai"), new Ennemy("Gros Guc'"), new Ennemy("IovaSan"));
+        private void LaunchFightTestScene() => Game.ActiveScene = new CombatScene(new Player() { Name = "Paku" }, new Ennemy() { Name = "Sukai" }, new Ennemy() { Name = "Gros Guc'" }, new Ennemy() { Name = "IovaSan" });
 
         private void LaunchDiceAnimationTestScene() => Game.ActiveScene = new DiceAnimationTest();
 

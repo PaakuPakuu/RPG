@@ -13,9 +13,12 @@ namespace DbService
         }
 
         public int IdTypeItem { get; set; }
-        public int Nom { get; set; }
+        public int IdGroupe { get; set; }
+        public string Nom { get; set; }
         public int Prix { get; set; }
+        public int Vente { get; set; }
 
+        public virtual GroupeItem IdGroupeNavigation { get; set; }
         public virtual ICollection<Item> Item { get; set; }
     }
 }

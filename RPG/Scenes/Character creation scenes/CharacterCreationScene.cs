@@ -116,6 +116,7 @@ namespace RPG
                 Inventaire inventory = new Inventaire()
                 {
                     Titre = "Baluchon",
+                    Poids = 10,
                     Slots = 10
                 };
                 rpgContext.Inventaire.Add(inventory);
@@ -147,7 +148,7 @@ namespace RPG
 
                 return newPlayer.IdJoueur;
             }
-            catch
+            catch (Exception e)
             {
                 return -1;
             }

@@ -2,7 +2,9 @@
 {
     public class Ennemy : Combatant
     {
-        public Ennemy(string name)
+        public int GivenExperience { get; set; }
+
+        public Ennemy()
         {
 
         }

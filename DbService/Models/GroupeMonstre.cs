@@ -9,14 +9,15 @@ namespace DbService
     {
         public GroupeMonstre()
         {
+            GroupeMonstreJoueur = new HashSet<GroupeMonstreJoueur>();
             Monstre = new HashSet<Monstre>();
         }
 
         public int IdGroupeMonstre { get; set; }
         public int IdMap { get; set; }
-        public sbyte EstBattu { get; set; }
 
         public virtual Map IdMapNavigation { get; set; }
+        public virtual ICollection<GroupeMonstreJoueur> GroupeMonstreJoueur { get; set; }
         public virtual ICollection<Monstre> Monstre { get; set; }
     }
 }

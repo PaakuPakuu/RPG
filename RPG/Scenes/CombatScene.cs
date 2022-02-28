@@ -75,8 +75,6 @@ namespace RPG
                 {
                     _fight.EndFight();
                 }
-
-                _fight.Player.Stats.Health -= 10;
             }
 
             Game.ActiveScene = new TitleMenuScene();
@@ -105,12 +103,12 @@ namespace RPG
         private void PrintAllLifeBars()
         {
             // Print player lifebar
-            PrintLifeBar(_playerLifeBarPos, _fight.Player.Stats.Health, _fight.Player.Stats.MaxHealth);
+            PrintLifeBar(_playerLifeBarPos, _fight.Player.Health, _fight.Player.MaxHealth);
 
             // Print ennemies lifebar
             for (int i = 0; i < _ennemiesLifeBarPos.Count; i++)
             {
-                PrintLifeBar(_ennemiesLifeBarPos[i], _fight.Ennemies[i].Stats.Health, _fight.Ennemies[i].Stats.MaxHealth);
+                PrintLifeBar(_ennemiesLifeBarPos[i], _fight.Ennemies[i].Health, _fight.Ennemies[i].MaxHealth);
             }
         }
 
