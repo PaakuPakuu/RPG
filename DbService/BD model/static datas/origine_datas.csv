@@ -1,0 +1,13 @@
+"id_origine";"nom";"courage_min";"courage_max";"intelligence_min";"intelligence_max";"charisme_min";"charisme_max";"adresse_min";"adresse_max";"force_min";"force_max";"pv_initial";"charge";"flairer_danger";"deux_mains";"bouclier";"points_resistance"
+1;"Humain";0;0;0;0;0;0;0;0;0;0;30;0;0;1;1;0
+2;"Barbare";12;0;0;0;0;0;0;0;13;0;35;0;0;1;0;0
+3;"Nain";11;0;0;0;0;0;0;0;12;0;35;0;0;0;1;0
+4;"Haut-Elfe";0;0;11;0;12;0;12;0;0;12;25;10;0;0;0;4
+5;"Demi-Elfe";0;0;0;0;10;0;11;0;0;0;28;15;0;0;1;5
+6;"Elfe Sylvain";0;0;0;0;12;0;10;0;0;11;25;10;10;0;1;4
+7;"Elfe Noir";0;0;12;0;0;0;13;0;0;0;25;15;10;0;0;3
+8;"Orque";0;0;0;8;0;10;0;0;12;0;35;0;50;1;1;0
+9;"Gobelin";0;10;0;10;0;8;0;0;0;9;20;10;50;0;1;0
+10;"Ogre";0;0;0;9;0;10;0;11;13;0;45;0;50;1;1;4
+11;"Semi-homme";12;0;10;0;0;0;0;0;0;10;25;10;0;0;1;3
+12;"Gnôme";0;0;10;0;0;0;13;0;0;8;15;2;0;0;0;2

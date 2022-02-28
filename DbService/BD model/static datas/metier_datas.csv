@@ -1,0 +1,13 @@
+"id_metier";"nom";"courage_min";"courage_max";"intelligence_min";"intelligence_max";"charisme_min";"charisme_max";"adresse_min";"adresse_max";"force_min";"force_max";"modificateur_pv";"points_protection";"charge";"deux_mains";"bouclier"
+1;"Guerrier";12;0;0;0;0;0;0;0;12;0;5.0;0;0;2;2
+2;"Ninja";0;0;0;0;12;0;0;0;0;0;0.0;3;0;2;2
+3;"Voleur";0;0;0;0;0;0;12;0;0;0;0.0;3;0;2;2
+4;"Prêtre";0;0;0;0;12;0;0;0;0;0;0.0;0;0;2;2
+5;"Mage";0;0;12;0;0;0;0;0;0;0;0.0;2;10;0;0
+6;"Paladin";12;0;10;0;11;0;0;0;9;0;2.0;0;0;2;2
+7;"Ranger";0;0;0;0;10;0;10;0;0;0;0.0;4;0;0;1
+8;"Ménestrel";0;0;0;0;12;0;11;0;0;0;0.0;2;0;0;0
+9;"Marchand";0;0;12;0;11;0;0;0;0;0;0.0;3;0;0;1
+10;"Ingénieur";0;0;0;0;0;0;11;0;0;0;0.0;3;0;0;1
+11;"Pirate";11;0;0;0;0;0;11;0;0;0;0.0;3;0;0;1
+12;"Bourgeois";0;0;10;0;11;0;0;0;0;0;0.0;0;0;2;1
