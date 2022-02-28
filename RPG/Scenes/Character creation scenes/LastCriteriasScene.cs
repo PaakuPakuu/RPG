@@ -45,8 +45,15 @@ namespace RPG
             _fortune = (fortune1 + fortune2) * 10;
 
             DisplayTools.WriteInWindowCenter($"×10 → {_fortune} ◉", y: 11, animated: true);
+            DisplayTools.WriteInWindowCenter("• Press [ENTER] •", y: ScreenHeight - 2);
 
             Console.ReadKey(true);
+
+            DisplayTools.WriteInDialogBox(new string[]
+            {
+                "Votre personnage a été créé avec succés !",
+                "\nPréparez-vous à l'aventure."
+            });
 
             Save();
             Game.ActiveScene = new GameScene();
@@ -62,7 +69,7 @@ namespace RPG
             _rpgContext.SaveChanges();
 
             Game.Player = Manager.GetPlayer(player);
-            Game.CurrentMap = Manager.GetMap(_rpgContext.Map.Single(m => m.IdMap == 1));
+            Game.CurrentMap = Manager.GetMap(_rpgContext.Map.Single(m => m.IdMap == player.IdMapCourante));
 
             Game.Player.Position.X = Game.CurrentMap.SpawnPosition.X;
             Game.Player.Position.Y = Game.CurrentMap.SpawnPosition.Y;
